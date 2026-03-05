@@ -1,44 +1,38 @@
 <script setup lang="ts" name="Login">
-import axios from "axios";
+import http from "@/utils/http";
+import type { UserData } from "@/types/user";
 import { ref } from "vue";
 
-let userName = ref("");
-let userPassword = ref("");
-// 提示信息
-let message = ref("");
+let userName = ref(""); //用户名
+let userPassword = ref(""); //密码
+let message = ref(""); // 提示信息
+const result = ref<UserData>(); //AJAX请求响应结果
 
-// axios请求的响应信息
-const result = ref({});
-
-// 登录并向后端发送验证
+/**
+ * @description 用户登录
+ * @returns {undefined}
+ */
 async function login() {
-  if (userName.value === "") {
-    message.value = "userName can't be empty";
-  } else if (userPassword.value === "") {
-    message.value = "userPassword can't be empty";
-  } else {
-    try {
-      result.value = await axios.post(
-        "http://172.31.188.231:8080/user/login ",
-        {
-          userName: userName.value,
-          userPassword: userPassword.value,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          timeout: 5 * 1000,
-        },
-      );
-      message.value = (result.value as any).data.message;
-    } catch (error) {
-      message.value = (error as any).message;
-    }
+  // 判断用户输入的信息是否有空
+  const hasNull = [userName.value, userPassword.value].some(
+    (data) => data === "",
+  );
+  if (hasNull) {
+    message.value = "user message can't be null!";
+    return;
   }
+
+  // 发送AJAX请求
+  result.value = await http.post("/user/login", {
+    userName: userName.value,
+    userPassword: userPassword.value,
+  });
+
+  message.value = result.value?.message || "";
+
   setTimeout(() => {
     message.value = "";
-  }, 5 * 1000);
+  }, 3 * 1000);
 }
 </script>
 

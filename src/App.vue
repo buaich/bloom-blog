@@ -8,11 +8,6 @@ import HomeMenu from "./components/HomeMenu.vue";
     <div class="login-part" v-if="!$route.meta.hideDefault">
       <router-view name="default" />
     </div>
-
-    <!-- <div class="note-part">
-      <router-view name="note-search-bar" />
-      <router-view name="note-show-box" />
-    </div> -->
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, onUnmounted, ref, useTemplateRef } from "vue";
 import sun from "@/assets/images/sun.png";
 import moon from "@/assets/images/moon.png";
 import home from "@/assets/images/home.png";
@@ -17,13 +17,16 @@ const dropdownLists = ref([
   },
   {
     text: "JavaScript",
-    children: ["Vue", "ES6", "Webpack", "Axios"],
+    children: ["ES6"],
     isShow: false,
   },
   {
     text: "Ui",
-    children: ["Java", "Spring", "Nginx", "Node", "MySQL", "Redis"],
+    children: ["..."],
     isShow: false,
+  },
+  {
+    text: "World",
   },
   {
     text: "Enter",
@@ -42,7 +45,6 @@ function change() {
 
 //拿到路由器
 const router = useRouter();
-
 /**
  * @description 路由跳转
  * @param {string} prefix - 路由前部分
@@ -51,12 +53,58 @@ const router = useRouter();
  */
 function jump(prefix: string, suffix: string) {
   console.log("<HomeMenu.vue>:jump(", prefix, ", ", suffix, ") execute");
-  router.push(`/${prefix.toLowerCase()}/${suffix.toLowerCase()}`);
+  if (prefix === "Enter") {
+    router.push(`/${suffix.toLowerCase()}`);
+  } else {
+    router.push(`/${prefix.toLowerCase()}/${suffix.toLowerCase()}`);
+  }
 }
+
+const searchInput = useTemplateRef<HTMLInputElement>("searchInput");
+/**
+ * @description 搜索聚焦
+ * @param {Event} event - 当前事件对象
+ * @returns {undefined}
+ */
+function focus(event: KeyboardEvent) {
+  // console.log(
+  // "<HomeMenu.vue>:focus(keybordEvent) execute",
+  // event.ctrlKey,
+  // event.key,
+  // );
+
+  // 阻止默认行为
+  if ((event.ctrlKey || event.metaKey) && event.key === "f") {
+    event.preventDefault();
+
+    // 获取焦点
+    searchInput.value?.focus();
+  }
+}
+onMounted(() => window.addEventListener("keydown", focus));
+onUnmounted(() => window.removeEventListener("keydown", focus));
 </script>
 
 <template>
   <div class="home-menu">
+    <!-- 网站标识 -->
+    <svg
+      t="1772689824065"
+      class="icon"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="3094"
+      width="30"
+      height="30"
+    >
+      <path
+        d="M705.5 136.5h-391c-108 0-195.5 87.5-195.5 195.3v293.9c1.5 69 42 113.6 85.5 161.2l80.3 80.3c11.6 8.9 19 12 29.7 11.8 10.7 0.3 21.5-3.6 29.7-11.8l46.2-46.2h315.1c108 0 195.5-87.5 195.5-195.3V331.8c0-107.8-87.5-195.3-195.5-195.3z m-20.6 360.6c-1.5 7.7-5.2 15.1-11.1 21L520.2 671.7c-15.8 15.8-41.5 15.8-57.3 0-15.8-15.8-15.8-41.5 0-57.3l87-87H353.6c-19.2 0-35.1-13.9-38.4-32.1-2.9-13 0.7-27.2 10.8-37.3l153.6-153.6c15.8-15.8 41.5-15.8 57.3 0 15.8 15.8 15.8 41.4 0 57.3l-87.6 87.6h192.5c4-0.3 8.1-0.2 12 0.7 18.2 3.3 32.1 19.2 32.1 38.4 0.1 3-0.4 5.9-1 8.7z"
+        fill="#020202"
+        p-id="3095"
+      ></path>
+    </svg>
+
     <!-- 主页搜索框 -->
     <div class="search">
       <label class="search-wrapper">
@@ -75,7 +123,13 @@ function jump(prefix: string, suffix: string) {
             p-id="920"
           ></path>
         </svg>
-        <input class="search-box" type="text" v-model="keywords" />
+        <input
+          class="search-box"
+          type="text"
+          v-model="keywords"
+          placeholder="Ctrl+F"
+          ref="searchInput"
+        />
       </label>
     </div>
 
@@ -146,11 +200,11 @@ function jump(prefix: string, suffix: string) {
   border-bottom: 1px solid rgb(245, 238, 238);
 }
 div > div:first-child {
-  grid-column: 1 / 4;
+  grid-column: 1 / 2;
 }
 /* #endregion */
 
-/* #region 两个下拉框菜单选项样式 */
+/* #region 下拉框菜单选项样式 */
 .dropdown-list-wrapper {
   position: relative;
 }
@@ -233,7 +287,7 @@ div > div:first-child {
   border: none;
   outline: none;
   padding: 0.3em 0.6em;
-  width: 300px;
+  width: 50px;
   background-color: transparent;
   border: 2px solid #ccc;
   border-radius: 4px;
@@ -243,16 +297,6 @@ div > div:first-child {
 .search-box:focus,
 .search-box:focus-visible {
   outline: 2px auto black;
-}
-/* #endregion */
-
-/* #region 登录按钮 */
-.login-button {
-  transition: transform 0.5s;
-}
-.login-button:hover {
-  cursor: pointer;
-  transform: scale(1.1);
 }
 /* #endregion */
 
