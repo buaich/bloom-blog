@@ -1,9 +1,8 @@
-import Login from "@/pages/auth/Login.vue";
+import Auth from "@/pages/auth/Auth.vue";
 
 export default [
   {
-    name: "login",
-    path: "/login",
-    component: Login,
+    path: "/auth/:authType",
+    component: Auth,
   },
 ];

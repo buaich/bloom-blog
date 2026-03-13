@@ -1,27 +1,43 @@
-<script setup lang="ts" name="Login">
-import { ref, nextTick, onUnmounted } from "vue";
+<script setup lang="ts" name="Auth">
+import { ref, nextTick, onUnmounted, watch } from "vue";
 import { useUserStore } from "@/store/userStore";
 import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
+import { AuthType } from "@/types/auth";
 
 let userName = ref(""); //用户名
+let userPhone = ref(""); //手机号
 let userPassword = ref(""); //密码
 let message = ref(""); // 提示信息
-let timer: ReturnType<typeof setTimeout> | null = null; //计时管理器
 
 const store = useUserStore();
 const { userData } = storeToRefs(store);
-
 const { authenticate }: { authenticate: Function } = store;
 
+let timer: ReturnType<typeof setTimeout> | null = null; //计时管理器
+
+const route = useRoute();
+let authType = ref(route.params?.authType); //（客户端路由）路径参数
+watch(
+  () => route.params?.authType,
+  (newAuthType) => {
+    authType.value = newAuthType;
+  },
+);
 /**
  * @description 用户登录
  */
-async function login(): Promise<void> {
-  // 用于认证，用户信息入库
-  const result = await authenticate("login", {
-    userName: userName.value,
-    userPassword: userPassword.value,
-  });
+async function auth(): Promise<void> {
+  const payload =
+    authType.value === AuthType.Login
+      ? { userName: userName.value, userPassword: userPassword.value }
+      : {
+          userName: userName.value,
+          userPhone: userPhone.value,
+          userPassword: userPassword.value,
+        };
+
+  await authenticate(authType.value, payload);
 
   message.value = userData.value.message as string | "";
 
@@ -42,7 +58,7 @@ onUnmounted(() => {
 <template>
   <div class="login-form-wrapper">
     <div class="login-form">
-      <h2>login</h2>
+      <h2>{{ authType }}</h2>
 
       <!-- 用户名输入框 -->
       <div class="input-group">
@@ -54,6 +70,17 @@ onUnmounted(() => {
           required
         />
         <label for="username">username</label>
+      </div>
+
+      <div class="input-group" v-show="authType === AuthType.Register">
+        <input
+          type="text"
+          id="phone"
+          v-model="userPhone"
+          placeholder=" "
+          required
+        />
+        <label for="phone">phone</label>
       </div>
 
       <!-- 密码输入框 -->
@@ -71,7 +98,7 @@ onUnmounted(() => {
       <div class="login-message-wrapper">
         <p v-show="message" class="login-message">{{ message }}</p>
       </div>
-      <button class="login-button" @click="login">login</button>
+      <button class="login-button" @click="auth">{{ authType }}</button>
     </div>
   </div>
 </template>

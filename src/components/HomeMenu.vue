@@ -54,7 +54,9 @@ const router = useRouter();
 function jump(prefix: string, suffix: string) {
   console.log("<HomeMenu.vue>:jump(", prefix, ", ", suffix, ") execute");
   if (prefix === "Enter") {
-    router.push(`/${suffix.toLowerCase()}`);
+    router.push({
+      path: `/auth/${suffix.toLowerCase()}`,
+    });
   } else {
     router.push(`/${prefix.toLowerCase()}/${suffix.toLowerCase()}`);
   }
