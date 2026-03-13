@@ -1,23 +1,10 @@
-import Login from "@/pages/auth/Login.vue";
 import { createRouter, createWebHistory } from "vue-router";
-
-const routes = [
-  {
-    path: "/home",
-    alias: "/house",
-    redirect: "/",
-  },
-  {
-    name: "login",
-    path: "/login",
-    component: Login,
-  },
-];
+import authRoutes from "./auth";
 
 // 创建路由器
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: [{ path: "/home", alias: "/house", redirect: "/" }, ...authRoutes],
 });
 
 // 导出路由器
