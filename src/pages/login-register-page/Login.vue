@@ -1,39 +1,42 @@
 <script setup lang="ts" name="Login">
-import http from "@/utils/http";
-import type { UserData } from "@/types/user";
-import { ref } from "vue";
+import { ref, nextTick, onUnmounted } from "vue";
+import { useUserStore } from "@/store/userStore";
+import { storeToRefs } from "pinia";
 
 let userName = ref(""); //用户名
 let userPassword = ref(""); //密码
 let message = ref(""); // 提示信息
-const result = ref<UserData>(); //AJAX请求响应结果
+let timer: ReturnType<typeof setTimeout> | null = null; //计时管理器
+
+const store = useUserStore();
+const { userData } = storeToRefs(store);
+
+const { authenticate }: { authenticate: Function } = store;
 
 /**
  * @description 用户登录
- * @returns {undefined}
  */
-async function login() {
-  // 判断用户输入的信息是否有空
-  const hasNull = [userName.value, userPassword.value].some(
-    (data) => data === "",
-  );
-  if (hasNull) {
-    message.value = "user message can't be null!";
-    return;
-  }
-
-  // 发送AJAX请求
-  result.value = await http.post("/user/login", {
+async function login(): Promise<void> {
+  // 用于认证，用户信息入库
+  const result = await authenticate("login", {
     userName: userName.value,
     userPassword: userPassword.value,
   });
 
-  message.value = result.value?.message || "";
+  message.value = userData.value.message as string | "";
 
-  setTimeout(() => {
-    message.value = "";
-  }, 3 * 1000);
+  if (timer) clearTimeout(timer);
+  nextTick(() => {
+    timer = setTimeout(() => {
+      message.value = "";
+    }, 2 * 1000);
+  });
 }
+
+onUnmounted(() => {
+  // 清空定时器
+  if (timer) clearTimeout(timer);
+});
 </script>
 
 <template>

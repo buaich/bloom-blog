@@ -3,7 +3,7 @@ import type { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 
 // 创建一个AxiosInstance
 const http: AxiosInstance = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://localhost:8081",
   timeout: 10 * 1000,
 });
 
