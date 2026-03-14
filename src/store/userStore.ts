@@ -25,13 +25,11 @@ export const useUserStore = defineStore("user", () => {
       userData.value = await http.post(`/user/${AuthType.Login}`, {
         ...payload,
       });
-
-      console.log(userData.value);
+      return true;
     } else if (authType === AuthType.Register) {
       userData.value = await http.post(`/user/${AuthType.Register}`, {
         ...payload,
       });
-
       return true;
     }
 
