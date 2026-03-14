@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import HomeMenu from "./components/HomeMenu.vue";
+
+const html = ref(`\`\`\`javascript
+obj instanceof Type;
+\`\`\``);
 </script>
 
 <template>
@@ -9,6 +14,7 @@ import HomeMenu from "./components/HomeMenu.vue";
       <router-view name="default" />
     </div>
   </div>
+  <div v-md="html"></div>
 </template>
 
 <style scoped>
