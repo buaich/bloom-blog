@@ -1,4 +1,4 @@
-import type { NoteData } from "@/types/NoteData";
+import type { NoteData } from "@/definitions/types/NoteData";
 import axios from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";

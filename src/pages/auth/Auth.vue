@@ -3,7 +3,7 @@ import { ref, nextTick, onUnmounted, watch } from "vue";
 import { useUserStore } from "@/store/userStore";
 import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
-import { AuthType } from "@/types/auth";
+import { AuthType } from "@/definitions/types/auth";
 
 let userName = ref(""); //用户名
 let userPhone = ref(""); //手机号

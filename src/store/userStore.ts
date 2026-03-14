@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
-import type { ResponseBody } from "@/types/responseBody";
-import type { User } from "@/types/user";
-import { AuthType } from "@/types/auth";
-import type { LoginParam, RegisterParam } from "@/types/auth";
+import type { ResponseBody } from "@/definitions/types/responseBody";
+import type { User } from "@/definitions/types/user";
+import { AuthType } from "@/definitions/types/auth";
+import type { LoginParam, RegisterParam } from "@/definitions/types/auth";
 import { ref } from "vue";
-import http from "@/utils/http";
+import http from "@/utils/network/http";
 
 export const useUserStore = defineStore("user", () => {
   // State

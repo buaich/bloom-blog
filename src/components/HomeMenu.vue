@@ -4,6 +4,8 @@ import sun from "@/assets/images/sun.png";
 import moon from "@/assets/images/moon.png";
 import home from "@/assets/images/home.png";
 import { useRouter } from "vue-router";
+import { Docs } from "@/definitions/enums/docs.enum";
+import { UI } from "@/definitions/enums/ui.enum";
 
 // 搜索框中的关键词
 let keywords = ref("");
@@ -12,25 +14,17 @@ let keywords = ref("");
 const dropdownLists = ref([
   {
     text: "Docs",
-    children: ["Git", "Webpack", "Axios", "Vue"],
+    children: Object.values(Docs),
     isShow: false,
   },
   {
-    text: "JavaScript",
-    children: ["ES6"],
+    text: "UI",
+    children: Object.values(UI),
     isShow: false,
   },
   {
-    text: "Ui",
+    text: "More",
     children: ["..."],
-    isShow: false,
-  },
-  {
-    text: "World",
-  },
-  {
-    text: "Enter",
-    children: ["login", "register"],
   },
 ]);
 
@@ -52,14 +46,11 @@ const router = useRouter();
  * @returns {undefined}
  */
 function jump(prefix: string, suffix: string) {
-  console.log("<HomeMenu.vue>:jump(", prefix, ", ", suffix, ") execute");
-  if (prefix === "Enter") {
-    router.push({
-      path: `/auth/${suffix.toLowerCase()}`,
-    });
-  } else {
-    router.push(`/${prefix.toLowerCase()}/${suffix.toLowerCase()}`);
-  }
+  router.push(`/${prefix.toLowerCase()}/${suffix.toLowerCase()}`);
+}
+
+function goToAuth() {
+  router.push("/auth/login");
 }
 
 const searchInput = useTemplateRef<HTMLInputElement>("searchInput");
@@ -69,12 +60,6 @@ const searchInput = useTemplateRef<HTMLInputElement>("searchInput");
  * @returns {undefined}
  */
 function focus(event: KeyboardEvent) {
-  // console.log(
-  // "<HomeMenu.vue>:focus(keybordEvent) execute",
-  // event.ctrlKey,
-  // event.key,
-  // );
-
   // 阻止默认行为
   if ((event.ctrlKey || event.metaKey) && event.key === "f") {
     event.preventDefault();
@@ -135,6 +120,9 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
       </label>
     </div>
 
+    <!-- 空白 -->
+    <div></div>
+
     <!-- 主页菜单中间的下拉框 -->
     <div
       class="dropdown-list-wrapper"
@@ -174,9 +162,11 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
       </transition>
     </div>
 
+    <div>Env</div>
+
     <div class="home-theme-wrapper">
       <!-- 主页菜单选项：Home -->
-      <div class="home-button">
+      <div class="home-button" @click="goToAuth">
         <img :src="home" style="width: 20px; height: 20px" />
       </div>
       <!-- 主页菜单选项：主题切换 -->
@@ -200,9 +190,6 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
   justify-items: center;
   /* 下边框 */
   border-bottom: 1px solid rgb(245, 238, 238);
-}
-div > div:first-child {
-  grid-column: 1 / 2;
 }
 /* #endregion */
 
