@@ -1,8 +1,8 @@
-import HomeMenu from "@/components/HomeMenu.vue";
+import Docs from "@/pages/docs/Docs.vue";
 
 export default [
   {
     path: "/docs/:option",
-    component: HomeMenu,
+    component: Docs,
   },
 ];

@@ -14,15 +14,10 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
-    "@fontsource/fira-code": "^5.2.7",
-    "@fontsource/fira-sans": "^5.2.7",
     "axios": "^1.13.2",
-    "dompurify": "^3.3.3",
     "highlight.js": "^11.11.1",
     "jsencrypt": "^3.5.4",
-    "marked": "^17.0.4",
-    "marked-highlight": "^2.2.3",
-    "mermaid": "^11.12.2",
+    "markdown-it": "^14.1.1",
     "mitt": "^3.0.1",
     "pinia": "^3.0.4",
     "vue": "^3.5.26",
@@ -30,9 +25,7 @@
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.3",
-    "@types/dompurify": "^3.0.5",
-    "@types/highlight.js": "^9.12.4",
-    "@types/marked": "^5.0.2",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^24.10.4",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vue/tsconfig": "^0.8.1",
