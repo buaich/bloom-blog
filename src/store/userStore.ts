@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import type { ResponseBody } from "@/definitions/types/responseBody";
 import type { User } from "@/definitions/types/user";
-import { AuthType } from "@/definitions/types/auth";
-import type { LoginParam, RegisterParam } from "@/definitions/types/auth";
+import { Auth } from "@/definitions/enums/auth.enums";
+import type { LoginParam, RegisterParam } from "@/definitions/enums/auth.enums";
 import { ref } from "vue";
 import http from "@/utils/network/http";
 
@@ -20,14 +20,14 @@ export const useUserStore = defineStore("user", () => {
     authType: string,
     payload: RegisterParam | LoginParam,
   ): Promise<boolean> {
-    if (authType === AuthType.Login) {
+    if (authType === Auth.Login) {
       // 更新
-      userData.value = await http.post(`/user/${AuthType.Login}`, {
+      userData.value = await http.post(`/user/${Auth.Login}`, {
         ...payload,
       });
       return true;
-    } else if (authType === AuthType.Register) {
-      userData.value = await http.post(`/user/${AuthType.Register}`, {
+    } else if (authType === Auth.Register) {
+      userData.value = await http.post(`/user/${Auth.Register}`, {
         ...payload,
       });
       return true;

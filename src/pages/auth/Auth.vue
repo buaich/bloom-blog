@@ -2,8 +2,8 @@
 import { ref, nextTick, onUnmounted, watch } from "vue";
 import { useUserStore } from "@/store/userStore";
 import { storeToRefs } from "pinia";
-import { useRoute } from "vue-router";
-import { AuthType } from "@/definitions/types/auth";
+import { useRoute, useRouter } from "vue-router";
+import { Auth } from "@/definitions/enums/auth.enums";
 
 let userName = ref(""); //用户名
 let userPhone = ref(""); //手机号
@@ -16,7 +16,8 @@ const { authenticate }: { authenticate: Function } = store;
 
 let timer: ReturnType<typeof setTimeout> | null = null; //计时管理器
 
-const route = useRoute();
+const route = useRoute(); //路由规则
+const router = useRouter(); //路由器
 let authType = ref(route.params?.authType); //（客户端路由）路径参数
 watch(
   () => route.params?.authType,
@@ -29,7 +30,7 @@ watch(
  */
 async function auth(): Promise<void> {
   const payload =
-    authType.value === AuthType.Login
+    authType.value === Auth.Login
       ? { userName: userName.value, userPassword: userPassword.value }
       : {
           userName: userName.value,
@@ -40,12 +41,16 @@ async function auth(): Promise<void> {
   await authenticate(authType.value, payload);
 
   message.value = userData.value.message as string | "";
+  console.log(message.value);
 
   if (timer) clearTimeout(timer);
   nextTick(() => {
     timer = setTimeout(() => {
       message.value = "";
-    }, 2 * 1000);
+
+      // 跳转路由
+      router.push(`/person/${userData.value.data?.userName}`);
+    }, 3 * 1000);
   });
 }
 
@@ -72,7 +77,7 @@ onUnmounted(() => {
         <label for="username">username</label>
       </div>
 
-      <div class="input-group" v-show="authType === AuthType.Register">
+      <div class="input-group" v-show="authType === Auth.Register">
         <input
           type="text"
           id="phone"

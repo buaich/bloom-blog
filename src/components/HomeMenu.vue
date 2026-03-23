@@ -2,10 +2,10 @@
 import { onMounted, onUnmounted, ref, useTemplateRef } from "vue";
 import sun from "@/assets/images/sun.png";
 import moon from "@/assets/images/moon.png";
-import home from "@/assets/images/home.png";
 import { useRouter } from "vue-router";
 import { Docs } from "@/definitions/enums/docs.enum";
 import { UI } from "@/definitions/enums/ui.enum";
+import { Auth } from "@/definitions/enums/auth.enums";
 
 // 搜索框中的关键词
 let keywords = ref("");
@@ -25,6 +25,10 @@ const dropdownLists = ref([
   {
     text: "More",
     children: ["..."],
+  },
+  {
+    text: "Auth",
+    children: Object.values(Auth),
   },
 ]);
 
@@ -162,13 +166,7 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
       </transition>
     </div>
 
-    <div>Env</div>
-
     <div class="home-theme-wrapper">
-      <!-- 主页菜单选项：Home -->
-      <div class="home-button" @click="goToAuth">
-        <img :src="home" style="width: 20px; height: 20px" />
-      </div>
       <!-- 主页菜单选项：主题切换 -->
       <div class="theme-button" v-on:click="change">
         <img :src="currentTheme" style="width: 20px; height: 20px" />

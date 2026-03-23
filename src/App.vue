@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import HomeMenu from "./components/HomeMenu.vue";
-
-const html = ref(`\`\`\`javascript
-obj instanceof Type;
-\`\`\``);
+import DocsTest from "./test/DocsTest.vue";
 </script>
 
 <template>
@@ -14,7 +10,7 @@ obj instanceof Type;
       <router-view name="default" />
     </div>
   </div>
-  <div v-md="html"></div>
+  <DocsTest></DocsTest>
 </template>
 
 <style scoped>
