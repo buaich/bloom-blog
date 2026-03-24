@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import HomeMenu from "./components/HomeMenu.vue";
-import DocsTest from "./test/DocsTest.vue";
 </script>
 
 <template>
@@ -10,28 +9,9 @@ import DocsTest from "./test/DocsTest.vue";
       <router-view name="default" />
     </div>
   </div>
-  <DocsTest></DocsTest>
 </template>
 
 <style scoped>
-/* 全局 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* 全局字体设置 */
-:global(body) {
-  font-family: "Fira Sans";
-  font-size: 16px;
-}
-
-:global(code),
-:global(pre) {
-  font-family: "Fira Code";
-}
-
 .login-part,
 .note-part {
   margin-top: 14px;

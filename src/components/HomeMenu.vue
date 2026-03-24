@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, useTemplateRef } from "vue";
-import sun from "@/assets/images/sun.png";
-import moon from "@/assets/images/moon.png";
 import { useRouter } from "vue-router";
 import { Docs } from "@/definitions/enums/docs.enum";
 import { UI } from "@/definitions/enums/ui.enum";
 import { Auth } from "@/definitions/enums/auth.enums";
-
-// 搜索框中的关键词
-let keywords = ref("");
+import ThemeButton from "./ThemeButton.vue";
 
 // 下拉框选项
 const dropdownLists = ref([
@@ -32,15 +28,6 @@ const dropdownLists = ref([
   },
 ]);
 
-// 当前主页主题
-let currentTheme = ref(sun);
-// 改变主题
-function change() {
-  console.log("<HomeMenu.vue> sun:", sun);
-  console.log("<HomeMenu.vue> moon:", moon);
-  currentTheme.value = currentTheme.value === sun ? moon : sun;
-}
-
 //拿到路由器
 const router = useRouter();
 /**
@@ -57,6 +44,8 @@ function goToAuth() {
   router.push("/auth/login");
 }
 
+// 搜索框中的关键词
+let keywords = ref("");
 const searchInput = useTemplateRef<HTMLInputElement>("searchInput");
 /**
  * @description 搜索聚焦
@@ -168,9 +157,7 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
 
     <div class="home-theme-wrapper">
       <!-- 主页菜单选项：主题切换 -->
-      <div class="theme-button" v-on:click="change">
-        <img :src="currentTheme" style="width: 20px; height: 20px" />
-      </div>
+      <ThemeButton :size="10" />
     </div>
   </div>
 </template>
@@ -178,16 +165,19 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
 <style scoped>
 /* #region 首页菜单使用Grid布局 */
 .home-menu {
+  --transition-standard: 0.3s ease;
+}
+
+.home-menu {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  width: 100%;
-  height: 50px;
-  font-size: 15px;
-  background-color: transparent;
   align-items: center;
   justify-items: center;
-  /* 下边框 */
-  border-bottom: 1px solid rgb(245, 238, 238);
+
+  width: 100%;
+  height: 50px;
+
+  border-bottom: 1px solid rgba(245, 238, 238, 0.8);
 }
 /* #endregion */
 
@@ -199,7 +189,7 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
   display: inline-flex;
   align-items: center; /* 垂直居中 */
   gap: 6px; /* 文字与图标间距 */
-  transition: color 0.1s ease;
+  transition: color var(--transition-standard);
 }
 .dropdown-list:hover,
 .dropdown-list:hover svg path {
@@ -215,42 +205,36 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
 }
 /* 下拉框菜单选项中具体内容 */
 .dropdown-list-details {
-  position: absolute; /* 开启绝对定位 */
-  top: 150%; /* 相对包含块（这里是.dropdown-list-wrapper的元素）的高度 */
-  left: 50%; /* 相对包含块的宽度 */
-  transform: translateX(-50%);
-  margin-top: 4px; /* 跟文字隔一点小缝 */
-  padding: 6px 0;
-  min-width: 100px; /* 再短也保证够宽 */
-  background: #fff;
+  position: absolute;
+  transform: translate(-2em, 0.5em);
+
+  /* padding: 6px 0; */
+  min-width: 100px;
   border: 1px solid #e5e5e5;
   border-radius: 4px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  list-style: none;
-  z-index: 10; /* 保证浮在别的格子之上 */
 }
 
 /* 单个下拉项样式 */
 .dropdown-list-details li {
-  /* 用于文字居中 */
   display: flex;
   justify-content: center;
+  align-items: center;
 
   padding: 4px 12px;
   cursor: pointer;
-  font-size: 14px; /* 比主菜单选项字体大小（15px）小一点 */
+  font-size: 14px;
   color: gray;
   transition: background 0.2s;
 }
 .dropdown-list-details li:hover {
-  background: #f5f5f5;
   color: black;
 }
 
 /* 淡入淡出过渡  */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity var(--transition-standard);
 }
 .fade-enter-from,
 .fade-leave-to {
@@ -260,12 +244,12 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
 
 /* #region 主页搜索框样式 */
 .search-wrapper {
-  display: inline-flex; /* 关键 */
-  align-items: center; /* 垂直中线对齐 */
-  gap: 6px; /* 图标与框间距，随意调 */
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 .search-wrapper > svg {
-  transition: all 0.5s ease;
+  transition: all var(--transition-standard);
 }
 .search-wrapper > svg:hover {
   transform: scale(0.7);
@@ -274,11 +258,11 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
   border: none;
   outline: none;
   padding: 0.3em 0.6em;
-  width: 50px;
+  width: 55px;
   background-color: transparent;
   border: 2px solid #ccc;
   border-radius: 4px;
-  transition: transform 0.2s ease;
+  transition: transform var(--transition-standard);
 }
 
 .search-box:focus,
@@ -287,27 +271,11 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
 }
 /* #endregion */
 
-/* #region 主页按钮、主题按钮 */
+/* #region 主题切换按钮 */
 .home-theme-wrapper {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;
-}
-.home-button {
-  transition: all 0.5s ease;
-}
-.home-button:hover {
-  transform: rotate(10deg);
-  transition: all 0.5s ease;
-}
-.theme-button {
-  transition: all 0.5s ease;
-}
-.theme-button:hover {
-  transform: rotate(10deg);
-  transition: all 0.5s ease;
 }
 /* #endregion */
 </style>
