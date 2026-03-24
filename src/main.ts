@@ -1,3 +1,4 @@
+import "./assets/styles/layout.css";
 import { createApp } from "vue";
 import App from "./App.vue";
 // 引入路由器
