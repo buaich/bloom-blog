@@ -24,3 +24,16 @@ body {
 body.dark{
   background-color: var(--global-bg-dark);
 }
+
+#app{
+    width: 100%;
+    height: 100%;
+}
+
+.router-view-wrapper{
+    width: 100%;
+    height: 650px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
