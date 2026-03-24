@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import authRoutes from "./auth.ts";
-import docsRoutes from "./docs.ts";
+import docsRoutes from "./doc.ts";
 import uiRoutes from "./ui.ts";
 import personRoutes from "./person.ts";
 

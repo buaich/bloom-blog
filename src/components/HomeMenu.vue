@@ -5,6 +5,7 @@ import { Docs } from "@/definitions/enums/docs.enum";
 import { UI } from "@/definitions/enums/ui.enum";
 import { Auth } from "@/definitions/enums/auth.enums";
 import ThemeButton from "./ThemeButton.vue";
+import { useDocStore } from "@/store/docStore";
 
 // 下拉框选项
 const dropdownLists = ref([
@@ -30,13 +31,16 @@ const dropdownLists = ref([
 
 //拿到路由器
 const router = useRouter();
+// 拿到通过隶属技术名称获取文档名称列表的方法
+const docStore = useDocStore();
+const { getDocNameList } = docStore;
 /**
  * @description 路由跳转
  * @param {string} prefix - 路由前部分
  * @param {string} suffix - 路由后部分
  * @returns {undefined}
  */
-function jump(prefix: string, suffix: string) {
+async function jump(prefix: string, suffix: string) {
   router.push(`/${prefix.toLowerCase()}/${suffix.toLowerCase()}`);
 }
 
@@ -220,6 +224,7 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: whitesmoke;
 
   padding: 4px 12px;
   cursor: pointer;
