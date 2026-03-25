@@ -4,7 +4,7 @@ import { useDocStore } from "@/store/docStore";
 import { storeToRefs } from "pinia";
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import MarkdownConverter from "./MarkdownConverter.vue";
+import CodeHighlighter from "./CodeHighlighter.vue";
 
 const docNameList = ref<string[]>();
 const doc = ref<Doc>();
@@ -58,7 +58,8 @@ async function getDoc(docName: string) {
       </div>
     </div>
     <div class="doc-content">
-      <MarkdownConverter :rawString="doc?.docContent" />
+      <!-- <CodeHighlighter :htmlString="doc?.docContent || ''" /> -->
+      <div v-html="doc?.docContent || ''"></div>
     </div>
     <div class="doc-outline"></div>
   </div>
@@ -103,6 +104,7 @@ async function getDoc(docName: string) {
 .doc-content {
   flex: 1;
   overflow-y: auto;
+  padding: 2em 4em;
 }
 
 .doc-outline {

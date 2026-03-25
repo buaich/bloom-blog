@@ -212,7 +212,6 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
   position: absolute;
   transform: translate(-2em, 0.5em);
 
-  /* padding: 6px 0; */
   min-width: 100px;
   border: 1px solid #e5e5e5;
   border-radius: 4px;
