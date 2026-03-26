@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import HomeMenu from "./components/HomeMenu.vue";
+import BlogNavbar from "./components/BlogNavbar.vue";
 </script>
 
 <template>
   <div class="app">
-    <HomeMenu />
+    <BlogNavbar />
     <div class="router-view-wrapper">
       <router-view name="default" />
     </div>
