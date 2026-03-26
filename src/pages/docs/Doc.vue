@@ -4,7 +4,7 @@ import { useDocStore } from "@/store/docStore";
 import { storeToRefs } from "pinia";
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import CodeHighlighter from "./CodeHighlighter.vue";
+import CodeHighlighter from "./HtmlConverter.vue";
 
 const docNameList = ref<string[]>();
 const doc = ref<Doc>();
@@ -58,8 +58,8 @@ async function getDoc(docName: string) {
       </div>
     </div>
     <div class="doc-content">
-      <!-- <CodeHighlighter :htmlString="doc?.docContent || ''" /> -->
-      <div v-html="doc?.docContent || ''"></div>
+      <CodeHighlighter :htmlString="doc?.docContent || ''" />
+      <!-- <div v-html="doc?.docContent || ''"></div> -->
     </div>
     <div class="doc-outline"></div>
   </div>

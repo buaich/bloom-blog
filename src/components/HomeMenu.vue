@@ -210,6 +210,7 @@ onUnmounted(() => window.removeEventListener("keydown", focus));
 /* 下拉框菜单选项中具体内容 */
 .dropdown-list-details {
   position: absolute;
+  z-index: 1000;
   transform: translate(-2em, 0.5em);
 
   min-width: 100px;

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import { useCodeHighlight } from "@/hooks/useCodeHighlight";
+import { useCodeBlock } from "@/hooks/useCodeBlock";
 
 const props = defineProps<{
   htmlString: string;
 }>();
 
-const { processedHtml } = useCodeHighlight(() => props.htmlString);
+const { processedHtml } = useCodeBlock(() => props.htmlString);
 
 const handleCopyClick = async (event: MouseEvent) => {
   const target = event.target as HTMLElement;
@@ -46,12 +46,14 @@ const handleCopyClick = async (event: MouseEvent) => {
 
 <style scoped>
 .code-highlighter {
-  --font-family: Fira Code, monospace;
   --font-color: black;
+  --font-size: 15px;
+  --font-family: Fira Code, monospace;
 }
 .code-highlighter {
-  font-family: var(--font-family);
   color: var(--font-color);
+  font-size: var(--font-size);
+  font-family: var(--font-family);
 }
 
 :deep(.code-block-wrapper) {
@@ -66,7 +68,6 @@ const handleCopyClick = async (event: MouseEvent) => {
   margin: 0;
   padding: 1em;
   overflow-x: auto;
-  font-size: 14px;
   line-height: 1.5;
   background: transparent;
 }
