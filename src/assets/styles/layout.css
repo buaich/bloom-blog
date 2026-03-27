@@ -6,28 +6,32 @@
   box-sizing: border-box;
 }
 
-body{
-    --font-size: 15px;
-    --font-family: "Fira Sans";
-    --transition-standard: 0.3s ease;
-    --global-bg-light: #fff;
-    --global-bg-dark: #121212;
+:root{
+  --font-size: 16px;
+  --font-weight: 500;
+  --transtion-standard: 0.25s ease;
+
+  --border-rs: 4px;
+
+  --font-clr-one: #2c2c2c;
+  --font-clr-two: rgba(60, 60, 60, 0.33);
+  --border-clr: rgba(60, 60, 60, 0.12);
+  --background-clr: #ffffff;
 }
 
-body {
-  font-family: var(--font-family);
-  font-size: var(--font-size);
-  background-color: var(--global-bg-light);
-  transition: all var(--transition-standard);
-}
+.dark{
+  --font-clr-one: #ffffff;
+  --font-clr-two: #ffffffb6;
+  --border-clr: rgba(255, 255, 255, 0.12);
+  --background-clr: #1a1a1a;
 
-body.dark{
-  background-color: var(--global-bg-dark);
+  transition: all 1s ease-out;
 }
 
 #app{
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    background-color: var(--background-clr);
 }
 
 .router-view-wrapper{

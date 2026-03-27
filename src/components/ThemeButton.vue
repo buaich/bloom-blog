@@ -1,15 +1,18 @@
 <script setup lang="ts" name="ThemeButton">
 import { computed } from "vue";
+import { useThemeStore } from "@/store/theme";
 
 const props = defineProps<{ size: number | string }>();
 const computedSize = computed(() => props.size + "px");
+const themeStore = useThemeStore();
+const { currentTheme, toggleTheme } = themeStore;
 
 /**
  * @description 切换主题
  * @return {undefined}
  */
-function toggleTheme() {
-  document.body.classList.toggle("dark");
+function toggle() {
+  toggleTheme();
 }
 </script>
 
@@ -136,7 +139,7 @@ function toggleTheme() {
   pointer-events: none; /* 不再成为事件触发的target */
 }
 
-body.dark .toggle__container {
+html.dark .toggle__container {
   background-color: var(--toggle-bg-dark);
 }
 
@@ -161,7 +164,7 @@ body.dark .toggle__container {
   transition: transform var(--transition-standard);
 }
 
-body.dark .toggle__container .toggle__sun {
+html.dark .toggle__container .toggle__sun {
   transform: translateX(
       calc(var(--toggle-width) - var(--sun-diameter) - var(--sun-offset))
     )
@@ -181,7 +184,7 @@ body.dark .toggle__container .toggle__sun {
     0em -0.06em 0.06em 0em #969696 inset;
 }
 
-body.dark .toggle__container .toggle__moon-mask {
+html.dark .toggle__container .toggle__moon-mask {
   transform: translateX(0);
 }
 
@@ -230,7 +233,7 @@ body.dark .toggle__container .toggle__moon-mask {
   transition: transform var(--transition-standard);
 }
 
-body.dark .toggle__container .toggle__clouds {
+html.dark .toggle__container .toggle__clouds {
   transform: translateY(3em);
 }
 
@@ -256,7 +259,7 @@ body.dark .toggle__container .toggle__clouds {
   left: 1em;
 }
 
-body.dark .toggle__container .toggle__stars > svg {
+html.dark .toggle__container .toggle__stars > svg {
   transform: translateY(0.5em);
 }
 

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import HomeMenu from "./components/HomeMenu.vue";
+import BlogNavbar from "./components/BlogNavbar.vue";
 </script>
 
 <template>
   <div class="app">
-    <HomeMenu />
-    <div class="router-view-wrapper">
+    <BlogNavbar />
+    <main class="router-view-wrapper">
       <router-view name="default" />
-    </div>
+    </main>
   </div>
 </template>
 <style scoped></style>

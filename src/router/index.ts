@@ -1,17 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
 import authRoutes from "./auth.ts";
-import docsRoutes from "./docs.ts";
-import uiRoutes from "./ui.ts";
+import docsRoutes from "./doc.ts";
 import personRoutes from "./person.ts";
 
 // 创建路由器
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: "/",
+      component: () => import("@/pages/home/BlogHome.vue"),
+    },
     { path: "/home", alias: "/house", redirect: "/" },
     ...authRoutes,
     ...docsRoutes,
-    ...uiRoutes,
     ...personRoutes,
   ],
 });
