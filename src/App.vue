@@ -5,9 +5,9 @@ import BlogNavbar from "./components/BlogNavbar.vue";
 <template>
   <div class="app">
     <BlogNavbar />
-    <div class="router-view-wrapper">
+    <main class="router-view-wrapper">
       <router-view name="default" />
-    </div>
+    </main>
   </div>
 </template>
 <style scoped></style>

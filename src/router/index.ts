@@ -7,6 +7,10 @@ import personRoutes from "./person.ts";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: "/",
+      component: () => import("@/pages/home/BlogHome.vue"),
+    },
     { path: "/home", alias: "/house", redirect: "/" },
     ...authRoutes,
     ...docsRoutes,

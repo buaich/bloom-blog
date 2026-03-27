@@ -1,8 +1,18 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, useTemplateRef } from "vue";
+import { computed, onMounted, onUnmounted, ref, useTemplateRef } from "vue";
 import ThemeButton from "./ThemeButton.vue";
 
-let menuGroups = ref<Array<string>>(["Docs", "UI", "About"]);
+const menuOptions = ref<Map<string, string[]>>(
+  new Map([
+    ["Docs", ["JavaScript", "Axios", "TypeScript"]],
+    ["UI", ["Form", "Button", "Block"]],
+    ["About", ["Me", "Github"]],
+  ]),
+); //菜单选项为下拉框
+const computedMenuOptions = computed(() =>
+  [...menuOptions.value.entries()].map(([key, value]) => ({ key, value })),
+);
+
 const keys = useTemplateRef<HTMLSpanElement>("keys"); //DOM元素
 /**
  * @description 搜索聚焦
@@ -62,7 +72,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
                 p-id="2595"
               ></path>
             </svg>
-            <span>search</span></span
+            <span class="dosearch-button-text">search</span></span
           >
           <span tabindex="0" class="docsearch-button-keys" ref="keys">
             <kbd class="docsearch-button-key">Ctrl</kbd>
@@ -73,13 +83,13 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
       <!-- 导航栏菜单 -->
       <div class="navbar-menu">
         <div
-          class="navbar-menu-group"
-          v-for="(group, index) in menuGroups"
-          :key="index"
+          class="navbar-menu-option"
+          v-for="menuOption in computedMenuOptions"
+          :key="menuOption.key"
         >
           <button class="dropdown-btn">
             <span class="dropdown-btn-text">
-              {{ group }}
+              {{ menuOption.key }}
               <svg
                 t="1774526541289"
                 class="dropdown-btn-logo"
@@ -97,9 +107,36 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
               </svg>
             </span>
           </button>
+
+          <div class="dropdown-list">
+            <a
+              class="dropdown-list-item"
+              v-for="item in menuOption.value"
+              :key="item"
+              href="/"
+            >
+              {{ item }}
+            </a>
+          </div>
         </div>
 
-        <div class="navbar-menu-group">Me</div>
+        <div class="navbar-menu-option">
+          <button class="hamburger-btn">
+            <svg
+              t="1774573589496"
+              class="hamburger-btn-logo"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="7980"
+            >
+              <path
+                d="M170.624 256c0-23.616 19.136-42.688 42.688-42.688h597.312a42.688 42.688 0 1 1 0 85.312H213.312A42.688 42.688 0 0 1 170.624 256z m0 256c0-23.552 19.072-42.688 42.688-42.688h597.312a42.688 42.688 0 1 1 0 85.376H213.312A42.688 42.688 0 0 1 170.624 512z m42.688 213.312a42.688 42.688 0 0 0 0 85.376h597.312a42.688 42.688 0 0 0 0-85.376H213.312z"
+                p-id="7981"
+              ></path>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div class="menu-theme">
@@ -116,6 +153,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   --menu-padding: 0em 2em;
 }
 .navbar {
+  position: relative;
   display: flex;
   align-items: center;
   height: var(--menu-h);
@@ -128,6 +166,12 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   font-weight: var(--font-weight);
   letter-spacing: normal;
   color: var(--font-clr-one);
+  transition: all var(--transtion-standard);
+}
+@media (min-width: 960px) {
+  .navbar {
+    position: fixed;
+  }
 }
 .site-title {
   height: var(--menu-h);
@@ -189,8 +233,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   border-radius: 4px;
   color: var(--font-clr-two);
 
-  transition: border-color var(--transtion-standard);
-  transition: color var(--transtion-standard);
+  transition: all var(--transtion-standard);
 }
 .docsearch-button-key {
   height: calc(var(--font-size) * 1.5);
@@ -204,13 +247,20 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   border-color: var(--font-clr-one);
   color: var(--font-clr-one);
 }
-
+.docsearch-button-keys:focus,
+.docsearch-button-keys:focus-visible {
+  color: var(--font-clr-one);
+  border: 1px solid var(--font-clr-one);
+}
 .navbar-menu {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.navbar-menu-group {
+.navbar-menu-option {
+  position: relative;
+  display: flex;
+  align-items: center;
   padding: 0 var(--font-size);
 }
 .dropdown-btn {
@@ -220,6 +270,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   border: none;
   cursor: pointer;
   color: var(--font-clr-one);
+  transition: all var(--transtion-standard);
 }
 .dropdown-btn-text {
   display: flex;
@@ -233,10 +284,63 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   margin-left: calc(var(--font-size) / 4);
   transition: var(--transtion-standard);
 }
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+
+  display: none;
+  flex-direction: column;
+
+  background-color: var(--background-clr);
+  padding: calc(var(--font-size) / 4) calc(var(--font-size));
+  border: 1px solid var(--border-clr);
+  border-radius: var(--border-rs);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  transition: all var(--transtion-standard);
+}
+.dropdown-list-item {
+  color: var(--font-clr-one);
+  text-decoration: none;
+}
+
+.navbar-menu-option:hover .dropdown-list {
+  display: flex;
+}
 .dropdown-btn:hover {
   color: var(--font-clr-two);
 }
 .dropdown-btn:hover .dropdown-btn-logo {
   fill: var(--font-clr-two);
+}
+
+.hamburger-btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.hamburger-btn-logo {
+  fill: var(--font-clr-one);
+  width: calc(var(--font-size) * 1.5);
+  height: calc(var(--font-size) * 1.5);
+}
+
+@media (max-width: 800px) {
+  .dosearch-button-text {
+    display: none;
+  }
+
+  .dropdown-btn {
+    display: none;
+  }
+}
+
+.menu-theme {
+  display: flex;
+  align-items: center;
 }
 </style>

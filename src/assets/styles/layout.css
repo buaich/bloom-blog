@@ -9,25 +9,29 @@
 :root{
   --font-size: 16px;
   --font-weight: 500;
+  --transtion-standard: 0.25s ease;
+
+  --border-rs: 4px;
+
   --font-clr-one: #2c2c2c;
   --font-clr-two: rgba(60, 60, 60, 0.33);
   --border-clr: rgba(60, 60, 60, 0.12);
   --background-clr: #ffffff;
-  --transtion-standard: 0.25s ease;
 }
 
 .dark{
   --font-clr-one: #ffffff;
   --font-clr-two: #ffffffb6;
   --border-clr: rgba(255, 255, 255, 0.12);
-  --background-clr: #2c2c2c;
+  --background-clr: #1a1a1a;
 
   transition: all 1s ease-out;
 }
 
 #app{
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    background-color: var(--background-clr);
 }
 
 .router-view-wrapper{
