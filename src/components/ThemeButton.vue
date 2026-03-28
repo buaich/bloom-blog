@@ -86,7 +86,7 @@ function toggle() {
   --base-scale: 100px;
   --toggle-width: 5.625em;
   --toggle-height: 2.5em;
-  --toggle-bg-light: #d4e9f9;
+  --toggle-bg-light: #1a1a1a;
   --toggle-bg-dark: #1d1f2c;
   --transition-standard: 0.3s ease;
 
@@ -97,7 +97,7 @@ function toggle() {
   --cloud-clr-back: #aacadf;
 
   --sun-diameter: 2.125em; /* 太阳直径 */
-  --sun-clr: rgb(249, 192, 86);
+  --sun-clr: #1a1a1a;
   --sun-offset: calc((var(--toggle-height) - var(--sun-diameter)) / 2);
   --shadow-primary: rgba(0, 0, 0, 0.25);
   --halo-clr: rgba(255, 255, 255, 0.1);
@@ -154,7 +154,7 @@ html.dark .toggle__container {
     0.05em 0.125em 0.125em var(--shadow-primary),
     0em 0.05em 0.125em var(--shadow-primary),
     0.05em 0.05em 0.05em 0em rgba(254, 255, 239, 0.61) inset,
-    0em -0.05em 0.05em 0em #a1872a inset,
+    0em -0.05em 0.05em 0em rgba(254, 255, 239, 0.61) inset,
     0 0 0 0.625em var(--halo-clr),
     0 0 0 1.25em var(--halo-clr),
     0 0 0 1.875em var(--halo-clr);
