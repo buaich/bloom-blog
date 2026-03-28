@@ -160,7 +160,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   width: var(--menu-w);
   padding: var(--menu-padding);
   border-bottom: 1px solid var(--border-clr);
-  background-color: var(--background-clr);
+  background-color: var(--bg-clr);
 
   font-size: var(--font-size);
   font-weight: var(--font-weight);
@@ -294,7 +294,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   display: none;
   flex-direction: column;
 
-  background-color: var(--background-clr);
+  background-color: var(--bg-clr);
   padding: calc(var(--font-size) / 4) calc(var(--font-size));
   border: 1px solid var(--border-clr);
   border-radius: var(--border-rs);

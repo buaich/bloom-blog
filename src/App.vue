@@ -16,7 +16,7 @@ import BlogNavbar from "./components/BlogNavbar.vue";
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--background-clr);
+  background-color: var(--bg-clr);
 }
 
 .main {

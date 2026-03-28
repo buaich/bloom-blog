@@ -13,17 +13,22 @@
 
   --border-rs: 4px;
 
-  --font-clr-one: #2c2c2c;
+  --font-clr-one: #1c1c1c;
   --font-clr-two: rgba(60, 60, 60, 0.33);
   --border-clr: rgba(60, 60, 60, 0.12);
-  --background-clr: #ffffff;
+  --bg-clr: #fff;
+
+  --planet-clr: #1c1c1c;
+  --star-clr: #1c1c1c;
 }
 
 .dark{
-  --font-clr-one: #ffffff;
+  --font-clr-one: #fff;
   --font-clr-two: #ffffffb6;
   --border-clr: rgba(255, 255, 255, 0.12);
-  --background-clr: #1a1a1a;
+  --bg-clr: #1a1a1a;
+  --planet-clr: #fff;
+  --star-clr: #ffd966;
 
   transition: all 1s ease-out;
 }
