@@ -10,4 +10,21 @@ import BlogNavbar from "./components/BlogNavbar.vue";
     </main>
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+.app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-clr);
+}
+
+.main {
+  padding: 55px 0 0 0;
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+</style>

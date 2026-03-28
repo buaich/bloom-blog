@@ -81,9 +81,9 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
         </button>
       </div>
       <!-- 导航栏菜单 -->
-      <div class="navbar-menu">
+      <div class="dropdown">
         <div
-          class="navbar-menu-option"
+          class="dropdown-option"
           v-for="menuOption in computedMenuOptions"
           :key="menuOption.key"
         >
@@ -119,27 +119,27 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
             </a>
           </div>
         </div>
-
-        <div class="navbar-menu-option">
-          <button class="hamburger-btn">
-            <svg
-              t="1774573589496"
-              class="hamburger-btn-logo"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="7980"
-            >
-              <path
-                d="M170.624 256c0-23.616 19.136-42.688 42.688-42.688h597.312a42.688 42.688 0 1 1 0 85.312H213.312A42.688 42.688 0 0 1 170.624 256z m0 256c0-23.552 19.072-42.688 42.688-42.688h597.312a42.688 42.688 0 1 1 0 85.376H213.312A42.688 42.688 0 0 1 170.624 512z m42.688 213.312a42.688 42.688 0 0 0 0 85.376h597.312a42.688 42.688 0 0 0 0-85.376H213.312z"
-                p-id="7981"
-              ></path>
-            </svg>
-          </button>
-        </div>
       </div>
 
-      <div class="menu-theme">
+      <div class="hamburger">
+        <button class="hamburger-btn">
+          <svg
+            t="1774573589496"
+            class="hamburger-btn-logo"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="7980"
+          >
+            <path
+              d="M170.624 256c0-23.616 19.136-42.688 42.688-42.688h597.312a42.688 42.688 0 1 1 0 85.312H213.312A42.688 42.688 0 0 1 170.624 256z m0 256c0-23.552 19.072-42.688 42.688-42.688h597.312a42.688 42.688 0 1 1 0 85.376H213.312A42.688 42.688 0 0 1 170.624 512z m42.688 213.312a42.688 42.688 0 0 0 0 85.376h597.312a42.688 42.688 0 0 0 0-85.376H213.312z"
+              p-id="7981"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="theme">
         <ThemeButton :size="10" />
       </div>
     </div>
@@ -201,6 +201,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
 
 .docsearch {
   flex-grow: 1;
+  flex-shrink: 2;
   display: flex;
   align-items: center;
   height: var(--menu-h);
@@ -252,12 +253,12 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   color: var(--font-clr-one);
   border: 1px solid var(--font-clr-one);
 }
-.navbar-menu {
+.dropdown {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.navbar-menu-option {
+.dropdown-option {
   position: relative;
   display: flex;
   align-items: center;
@@ -306,7 +307,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   text-decoration: none;
 }
 
-.navbar-menu-option:hover .dropdown-list {
+.dropdown-option:hover .dropdown-list {
   display: flex;
 }
 .dropdown-btn:hover {
@@ -322,6 +323,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   background-color: transparent;
   border: none;
   cursor: pointer;
+  padding: 0 var(--font-size);
 }
 .hamburger-btn-logo {
   fill: var(--font-clr-one);
@@ -334,12 +336,12 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
     display: none;
   }
 
-  .dropdown-btn {
+  .dropdown-option {
     display: none;
   }
 }
 
-.menu-theme {
+.theme {
   display: flex;
   align-items: center;
 }
