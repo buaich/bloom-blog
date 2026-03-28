@@ -168,7 +168,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   color: var(--font-clr-one);
   transition: all var(--transtion-standard);
 }
-@media (min-width: 960px) {
+@media (min-width: 750px) {
   .navbar {
     position: fixed;
   }
