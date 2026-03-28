@@ -273,7 +273,7 @@ onBeforeUnmount(() => {
 .container {
   width: 100%;
   height: 100%;
-  padding: 0 calc(var(--font-size) * 2);
+  padding: 0 calc(var(--font-size) / 2);
   display: flex;
   flex-direction: column;
   align-items: center;
