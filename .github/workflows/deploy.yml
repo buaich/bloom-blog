@@ -1,0 +1,54 @@
+name: Deploy bloom-blog project to Cloudflare Pages
+
+# 触发条件：当代码推送到main分支时运行（包括PR合并）
+on:
+  push:
+    branches:
+      - main
+  # 也支持手动触发，方便调试
+  workflow_dispatch:
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    # 可选：设置环境审批规则（在 Settings -> Environments 中配置）
+    environment:
+      name: production
+
+    steps:
+      # 1. 拉取代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      # 3. 安装依赖
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. 运行 vitest 测试（这是你的核心要求）
+      #    如果测试失败，后续步骤不会执行
+      - name: Run vitest tests
+        run: npm run test
+        # 如果你的测试命令不是 npm run test，请修改为实际命令
+        # 例如：npm run test:unit 或 vitest run
+
+      # 5. 构建 Vue3 项目
+      - name: Build project
+        run: npm run build
+        # 构建输出目录通常是 dist，如果你的项目不是，请在下方修改
+
+      # 6. 部署到 Cloudflare Pages
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: bloom-blog # 替换为你的 Cloudflare Pages
+          directory: ./dist # 构建输出目录
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
