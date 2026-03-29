@@ -43,12 +43,11 @@ jobs:
         run: npm run build
         # 构建输出目录通常是 dist，如果你的项目不是，请在下方修改
 
-      # 6. 部署到 Cloudflare Pages
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: bloom-blog
-          directory: ./dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Debug, Check Pages project via API
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          curl -X GET "https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/pages/projects/bloom-blog" \
+            -H "Authorization: Bearer $CF_API_TOKEN" \
+            -H "Content-Type: application/json"
