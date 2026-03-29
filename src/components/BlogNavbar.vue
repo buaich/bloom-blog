@@ -154,6 +154,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
 }
 .navbar {
   position: relative;
+  z-index: 1000;
   display: flex;
   align-items: center;
   height: var(--menu-h);
@@ -289,7 +290,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 100;
+  z-index: 999;
 
   display: none;
   flex-direction: column;
@@ -298,8 +299,6 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
   padding: calc(var(--font-size) / 4) calc(var(--font-size));
   border: 1px solid var(--border-clr);
   border-radius: var(--border-rs);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
   transition: all var(--transtion-standard);
 }
 .dropdown-list-item {

@@ -1,30 +1,31 @@
 <script setup lang="ts" name="HomeLogo">
-import { onMounted, onBeforeUnmount, useTemplateRef } from "vue";
+import { PathString } from "@/definitions/enums/home.enums";
+import { onMounted, onBeforeUnmount, useTemplateRef, ref } from "vue";
 
-const planetPathData = `M509.504 174c124.227 0 232.599 67.853 290.039 168.5 74.007-2.473 118.628 10.752 142.715 38.877 4.602 5.373 8.222 11.026 11.182 17.082a97.867 97.867 0 0 1 3.1 7.06l0.36 0.92 1.55 4.147c0.5 1.36 0.902 2.755 1.2 4.174 10.354 49.217-39.577 110.87-125.104 168.42C800.252 730.91 667.741 841 509.504 841c-90.496 0-172.577-36.007-232.685-94.469-125.547-0.693-195.726-17.626-215.627-62.838-12.318-27.985-2.11-57.599 24.175-87.882 11.313-13.034 26.141-26.85 44.532-41.546l3.188-2.528 3.258-2.545c0.548-0.426 1.1-0.852 1.654-1.28l3.363-2.571c1.132-0.86 2.277-1.723 3.432-2.59l3.503-2.606c0.59-0.436 1.182-0.873 1.777-1.31l3.608-2.634c1.214-0.881 2.44-1.765 3.678-2.652l3.748-2.67 3.818-2.689 3.889-2.706 3.959-2.726 2.005-1.37 1.301-0.885a339.225 339.225 0 0 1-0.248-13.003c0-184.187 149.39-333.5 333.672-333.5zM754.17 630.563l-1.716 0.887c-113.877 58.925-247.706 99.169-383.021 111.28 40.98 24.434 88.885 38.47 140.07 38.47 106.955 0 199.589-61.285 244.667-150.637zM509.504 233.8c-151.239 0-273.842 122.54-273.842 273.7 0 68.475 25.16 131.077 66.742 179.076 150.84-3.066 304.436-45.572 430.401-112.347a834.13 834.13 0 0 0 12.143-6.565l4.768-2.651a761.557 761.557 0 0 0 30.824-18.216 275.324 275.324 0 0 0 2.805-39.297c0-151.16-122.603-273.7-273.841-273.7zM185.397 587.106l-2.466 1.82-3.004 2.243-2.937 2.223c-0.485 0.368-0.966 0.736-1.445 1.103l-2.839 2.19c-0.468 0.363-0.933 0.726-1.395 1.087l-2.74 2.158-1.346 1.071-2.641 2.126a431.241 431.241 0 0 0-5.085 4.187l-2.444 2.06a366.882 366.882 0 0 0-3.54 3.05l-2.279 2.005-2.211 1.983-2.146 1.961-2.079 1.938-2.013 1.916c-0.66 0.635-1.308 1.266-1.946 1.893l-1.88 1.87-1.813 1.848c-0.593 0.612-1.175 1.22-1.746 1.825l-1.68 1.801a170.51 170.51 0 0 0-1.614 1.778l-1.546 1.755c-7.45 8.583-11.973 15.762-13.808 21.083-0.5 1.453-0.719 2.521-0.759 3.242l-0.008 0.317-0.007 0.018 0.028 0.056c0.123 0.222 0.383 0.575 0.861 1.077l0.258 0.264c1.306 1.305 3.29 2.78 6.01 4.335 6.987 3.997 17.411 7.726 31.126 10.869 0.874 0.2 1.76 0.398 2.658 0.592l2.726 0.576 2.794 0.56 2.863 0.541 2.93 0.526 2.999 0.508 3.066 0.491 1.559 0.24 3.168 0.465 3.236 0.448 3.304 0.432c0.556 0.07 1.115 0.14 1.677 0.209l3.405 0.405c0.573 0.067 1.15 0.132 1.728 0.197l3.506 0.38 1.779 0.183 3.607 0.354 3.675 0.336 3.742 0.319c0.629 0.052 1.26 0.103 1.896 0.153l3.842 0.293 3.91 0.275 3.976 0.258 4.044 0.24 0.796 0.05c-18.862-29.86-33.112-62.921-41.752-98.183z m161.097-154.24c13.576 8.96 17.466 27.078 8.893 40.788l-0.41 0.64c-8.841 13.382-11.28 30.817-6.395 53.959l0.285 1.316c3.564 16.124-6.625 32.084-22.758 35.646-16.133 3.562-32.1-6.621-35.664-22.746-8.547-38.666-4.006-72.956 14.601-101.124 9.103-13.781 27.66-17.577 41.448-8.478z m479.688-30.732l1.6 4.941c10.001 31.693 15.394 65.43 15.394 100.425l-0.043-5.412c8.239-6.862 15.784-13.674 22.569-20.38 14.09-13.93 24.307-26.855 30.197-37.83 2.516-4.687 4.107-8.772 4.845-12.105 0.295-1.33 0.43-2.406 0.456-3.25v-0.205l-0.142-0.37a75.81 75.81 0 0 0-0.537-1.333l-0.499-1.163-0.474-1.02c-0.78-1.593-1.516-2.7-2.5-3.881l-0.242-0.286c-4.028-4.703-11.335-9.008-24.472-12.5-0.676-0.18-1.363-0.355-2.06-0.527l-2.122-0.503c-4.308-0.983-8.998-1.822-14.08-2.508l-2.575-0.33c-1.738-0.212-3.52-0.407-5.346-0.583l-2.772-0.253-2.839-0.225-2.906-0.2c-3.66-0.23-7.477-0.399-11.452-0.502zM531.984 264.881c16.452 1.52 28.556 16.083 27.034 32.526-1.52 16.443-16.09 28.54-32.542 27.02-61.86-5.716-104.309 14.613-132.552 62.546-8.384 14.229-26.721 18.97-40.958 10.591-14.236-8.38-18.98-26.708-10.597-40.937 40.326-68.44 105.266-99.54 189.615-91.746z`;
-
-const starPathData = `M313.991837 914.285714c-20.37551 0-40.228571-6.269388-56.946939-18.808163-30.302041-21.942857-44.930612-58.514286-38.661225-95.085714l24.032654-141.061225c3.134694-18.285714-3.134694-36.571429-16.195919-49.110204L123.297959 509.910204c-26.644898-26.122449-36.04898-64.261224-24.555102-99.787755 11.493878-35.526531 41.795918-61.126531 78.889796-66.35102l141.583674-20.375511c18.285714-2.612245 33.959184-14.106122 41.795918-30.30204l63.216326-128.522449C440.946939 130.612245 474.383673 109.714286 512 109.714286s71.053061 20.897959 87.24898 54.334694L662.987755 292.571429c8.359184 16.195918 24.032653 27.689796 41.795918 30.30204l141.583674 20.375511c37.093878 5.22449 67.395918 30.82449 78.889796 66.35102 11.493878 35.526531 2.089796 73.665306-24.555102 99.787755l-102.4 99.787755c-13.061224 12.538776-19.330612 31.346939-16.195919 49.110204l24.032654 141.061225c6.269388 37.093878-8.359184 73.142857-38.661225 95.085714-30.302041 21.942857-69.485714 24.555102-102.4 7.314286L538.122449 836.440816c-16.195918-8.359184-35.526531-8.359184-51.722449 0l-126.955102 66.87347c-14.628571 7.314286-30.302041 10.971429-45.453061 10.971428z`;
+// svg路径字符串
+const planetStr = PathString.Planet;
+const starStr = PathString.Star;
+const rocketStr = PathString.Rocket;
+// Path2D对象，存储一组绘制指令
+const planetPath = new Path2D(planetStr);
+const starPath = new Path2D(starStr);
+const rocketPath = new Path2D(rocketStr);
 
 /**
- * @description 解析SVG路径字符串中的所有坐标点，并计算出这些点的最小包围盒
- * @param {string} pathData SVG路径字符串
- * @return {Object} 包含最小包围盒信息的对象
+ * @description 从svg路径字符串中 提取路径边界框信息
+ * @param {string} pathStr svg路径字符串
+ * @return {Object} 路径边界框信息（路径的最小x坐标，路径的最小y坐标，路径的宽度，路径的高度）
  */
-function getPathBounds(pathData: string) {
-  // 匹配所有数字，包括负数、小数、整数
+function getPathBoundsFromString(pathStr: string) {
   const numRegex = /[-+]?\d*\.?\d+/g;
-  const nums = pathData.match(numRegex)?.map(Number) || [];
-
-  // 初始化最小包围盒的边界值
+  const nums = pathStr.match(numRegex)?.map(Number) || [];
   let minX = Infinity,
     minY = Infinity,
     maxX = -Infinity,
     maxY = -Infinity;
-
-  // 两个元素为一组，构成一个点的坐标，更新最小包围盒的边界值
   for (let i = 0; i < nums.length; i += 2) {
-    const x = nums[i];
-    const y = nums[i + 1];
+    const x = nums[i],
+      y = nums[i + 1];
     if (x !== undefined && y !== undefined) {
       minX = Math.min(minX, x);
       minY = Math.min(minY, y);
@@ -40,76 +41,111 @@ function getPathBounds(pathData: string) {
   };
 }
 
-// 预计算路径边界信息
-const planetBounds = getPathBounds(planetPathData);
-const starBounds = getPathBounds(starPathData);
+// 提取路径边界框信息
+const planetBounds = getPathBoundsFromString(planetStr);
+const starBounds = getPathBoundsFromString(starStr);
+const rocketBounds = getPathBoundsFromString(rocketStr);
 
+// 计算路径中心坐标
+const planetCenterX = planetBounds.minX + planetBounds.width / 2;
+const planetCenterY = planetBounds.minY + planetBounds.height / 2;
+const starCenterX = starBounds.minX + starBounds.width / 2;
+const starCenterY = starBounds.minY + starBounds.height / 2;
+const rocketCenterX = rocketBounds.minX + rocketBounds.width / 2;
+const rocketCenterY = rocketBounds.minY + rocketBounds.height / 2;
+
+// 画布元素引用
 const canvasRef = useTemplateRef<HTMLCanvasElement>("canvasRef");
 const containerRef = useTemplateRef<HTMLDivElement>("containerRef");
+// 观察者
 let resizeObserver: ResizeObserver | null = null;
 let themeObserver: MutationObserver | null = null;
+let animationId: number | null = null;
+// 上一帧的时间戳
+let lastTimestamp = 0;
+// 画布宽度和高度
+let cw = 0,
+  ch = 0;
+// 自定义光标是否显示
+const showCustomCursor = ref(false);
+// 自定义光标位置
+const cursorPos = ref({ x: 0, y: 0 });
+// 当前光标的旋转角度
+const currentCursorAngle = ref(0);
+// 目标光标的旋转角度
+let targetCursorAngle = 0;
+// 平滑系数∈[0,1]，越大越平滑，0.1表示每帧向目标靠近10%
+const ANGLE_SMOOTHING = 0.1;
+// 鼠标移动事件处理函数
+let cursorMoveHandler: ((e: MouseEvent) => void) | null = null;
+let cursorEnterHandler: ((e: MouseEvent) => void) | null = null;
+let cursorLeaveHandler: ((e: MouseEvent) => void) | null = null;
 
-let cw = 0, //画布宽度
-  ch = 0; //画布高度
+type Star = {
+  x: number;
+  y: number;
+  scale: number;
+  angle: number;
+  vx: number;
+  vy: number;
+  rotateSpeed: number;
+};
 
-// 星星类型：包含星星的位置、缩放、旋转角度信息
-type Star = { x: number; y: number; scale: number; angle: number };
-// 星星数组：每个元素包含 { x, y, scale, angle }
+type Planet = {
+  x: number;
+  y: number;
+  scale: number;
+  angle: number;
+  orbitRadius: number;
+  orbitAngle: number;
+  orbitSpeed: number;
+  selfRotateSpeed: number;
+  centerX: number;
+  centerY: number;
+};
+
 let stars: Star[] = [];
-// 星球类型：包含星球的位置、缩放、旋转角度信息
-type Planet = { x: number; y: number; scale: number; angle: number };
-// 星球数组：每个元素包含 { x, y, scale, angle }
 let planets: Planet[] = [];
 
 /**
- * @description 根据容器面积计算星星数量，线性变化
- * @param {number} area 容器面积
+ * @description 计算星星数量
+ * @param {number} area 区域面积
  * @return {number} 星星数量
  */
 function calcStarCount(area: number): number {
-  const minArea = 500 * 500;
-  const maxArea = 800 * 800;
-
-  const minStars = 250;
-  const maxStars = 500;
+  const minArea = 500 * 500,
+    maxArea = 800 * 800;
+  const minStars = 250,
+    maxStars = 500;
   if (area <= minArea) return minStars;
   if (area >= maxArea) return maxStars;
-
   return Math.round(
     minStars + ((maxStars - minStars) * (area - minArea)) / (maxArea - minArea),
   );
 }
-function calcPlanetCount(area: number): number {
-  const minArea = 500 * 500;
-  const maxArea = 800 * 800;
-  const minPlanets = 1;
-  const maxPlanets = 10;
-
-  if (area <= minArea) return minPlanets;
-  if (area >= maxArea) return maxPlanets;
-  return Math.round(
-    minPlanets +
-      ((maxPlanets - minPlanets) * (area - minArea)) / (maxArea - minArea),
-  );
-}
 
 /**
- * @description 生成随机星星信息
+ * @description 生成星星
  * @param {number} count 星星数量
- * @param {number} width 容器宽度
- * @param {number} height 容器高度
- * @return {Star[]} 星星信息数组
+ * @return {Star[]} 星星数组
  */
-function generateStars(count: number, width: number, height: number) {
+function generateStars(count: number, width: number, height: number): Star[] {
   const starsArr: Star[] = [];
-  const scaleMin = 0.005;
-  const scaleMax = 0.02;
+  const scaleMin = 0.005,
+    scaleMax = 0.02;
+  const speedRange = 1;
+  const rotateSpeedMin = 0.1,
+    rotateSpeedMax = 0.6;
   for (let i = 0; i < count; i++) {
     starsArr.push({
       x: Math.random() * width,
       y: Math.random() * height,
       scale: scaleMin + Math.random() * (scaleMax - scaleMin),
       angle: Math.random() * Math.PI * 2,
+      vx: (Math.random() - 0.5) * speedRange * 2,
+      vy: (Math.random() - 0.5) * speedRange * 2,
+      rotateSpeed:
+        rotateSpeedMin + Math.random() * (rotateSpeedMax - rotateSpeedMin),
     });
   }
   return starsArr;
@@ -119,37 +155,60 @@ function generatePlanets(
   width: number,
   height: number,
   area: number,
-) {
+): Planet[] {
   const planetsArr: Planet[] = [];
-
-  // 缩放范围随面积线性变化
-  const minArea = 500 * 500;
-  const maxArea = 800 * 800;
-  const minScaleAtMinArea = 0.02;
-  const maxScaleAtMinArea = 0.06;
-  const minScaleAtMaxArea = 0.05;
-  const maxScaleAtMaxArea = 0.12;
-
-  // 计算当前面积下的缩放范围（线性插值）
-  let scaleMin, scaleMax;
+  const minArea = 500 * 500,
+    maxArea = 800 * 800;
+  const minScaleAtMinArea = 0.015,
+    maxScaleAtMinArea = 0.04;
+  const minScaleAtMaxArea = 0.03,
+    maxScaleAtMaxArea = 0.1;
+  let globalScaleMin: number, globalScaleMax: number;
   if (area <= minArea) {
-    scaleMin = minScaleAtMinArea;
-    scaleMax = maxScaleAtMinArea;
+    globalScaleMin = minScaleAtMinArea;
+    globalScaleMax = maxScaleAtMinArea;
   } else if (area >= maxArea) {
-    scaleMin = minScaleAtMaxArea;
-    scaleMax = maxScaleAtMaxArea;
+    globalScaleMin = minScaleAtMaxArea;
+    globalScaleMax = maxScaleAtMaxArea;
   } else {
     const t = (area - minArea) / (maxArea - minArea);
-    scaleMin = minScaleAtMinArea + (minScaleAtMaxArea - minScaleAtMinArea) * t;
-    scaleMax = maxScaleAtMinArea + (maxScaleAtMaxArea - maxScaleAtMinArea) * t;
+    globalScaleMin =
+      minScaleAtMinArea + (minScaleAtMaxArea - minScaleAtMinArea) * t;
+    globalScaleMax =
+      maxScaleAtMinArea + (maxScaleAtMaxArea - maxScaleAtMinArea) * t;
   }
-
+  const centerX = width / 2,
+    centerY = height / 2;
+  const minRadius = Math.min(width, height) * 0.12;
+  const maxRadius = Math.min(width, height) * 0.85;
+  const maxAngularSpeed = 0.08;
+  const minAngularSpeed = 0.02;
+  const selfRotateSpeedMin = 0.1,
+    selfRotateSpeedMax = 0.4;
+  const exponent = 1.6;
   for (let i = 0; i < count; i++) {
+    const t = i / (count - 1);
+    const orbitRadius =
+      minRadius + (maxRadius - minRadius) * Math.pow(t, exponent);
+    const speedT = (orbitRadius - minRadius) / (maxRadius - minRadius);
+    const orbitSpeed =
+      maxAngularSpeed - speedT * (maxAngularSpeed - minAngularSpeed);
+    const radiusT = (orbitRadius - minRadius) / (maxRadius - minRadius);
+    const scale = globalScaleMin + (globalScaleMax - globalScaleMin) * radiusT;
+    const initialOrbitAngle = Math.random() * Math.PI * 2;
     planetsArr.push({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      scale: scaleMin + Math.random() * (scaleMax - scaleMin),
+      x: centerX + orbitRadius * Math.cos(initialOrbitAngle),
+      y: centerY + orbitRadius * Math.sin(initialOrbitAngle),
+      scale,
       angle: Math.random() * Math.PI * 2,
+      orbitRadius,
+      orbitAngle: initialOrbitAngle,
+      orbitSpeed,
+      selfRotateSpeed:
+        selfRotateSpeedMin +
+        Math.random() * (selfRotateSpeedMax - selfRotateSpeedMin),
+      centerX,
+      centerY,
     });
   }
   return planetsArr;
@@ -165,57 +224,168 @@ function getCssVar(varName: string): string {
 }
 
 /**
- * @description 绘制星星和星球动画
+ * @description 绘制
  */
 function draw() {
   const canvas = canvasRef.value;
   const ctx = canvas?.getContext("2d");
   if (!ctx || cw === 0 || ch === 0) return;
 
+  // 清除画布
   ctx.clearRect(0, 0, cw, ch);
 
-  // 获取当前主题对应的星球、星星颜色
+  // 获取CSS颜色
   const planetClr = getCssVar("--planet-clr");
   const starClr = getCssVar("--star-clr");
+  const orbitClr = getCssVar("--orbit-clr") || "rgba(255, 255, 255, 0.2)";
 
-  if (planets.length) {
-    const planetPath = new Path2D(planetPathData);
-    for (const p of planets) {
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.angle);
-      ctx.scale(p.scale, p.scale);
-      ctx.translate(-planetBounds.minX, -planetBounds.minY);
-      ctx.fillStyle = planetClr;
-      ctx.fill(planetPath);
-      ctx.restore();
-    }
+  // 绘制轨道
+  const radii = planets.map((p) => p.orbitRadius).sort((a, b) => b - a);
+  const maxRadius1 = radii[0];
+  const maxRadius2 = radii[1];
+
+  for (const p of planets) {
+    if (p.orbitRadius === maxRadius1 || p.orbitRadius === maxRadius2) continue;
+    ctx.beginPath();
+    ctx.arc(p.centerX, p.centerY, p.orbitRadius, 0, Math.PI * 2);
+    ctx.strokeStyle = orbitClr;
+    ctx.lineWidth = 1;
+    ctx.stroke();
   }
 
-  if (stars.length) {
-    const starPath = new Path2D(starPathData);
-    for (const s of stars) {
-      ctx.save();
-      ctx.translate(s.x, s.y);
-      ctx.rotate(s.angle);
-      ctx.scale(s.scale, s.scale);
-      ctx.translate(-starBounds.minX, -starBounds.minY);
-      ctx.fillStyle = starClr;
-      ctx.fill(starPath);
-      ctx.restore();
-    }
+  // 绘制行星
+  for (const p of planets) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.angle);
+    ctx.scale(p.scale, p.scale);
+    ctx.translate(-planetCenterX, -planetCenterY);
+    ctx.fillStyle = planetClr;
+    ctx.fill(planetPath);
+    ctx.restore();
+  }
+
+  // 绘制星星
+  for (const s of stars) {
+    ctx.save();
+    ctx.translate(s.x, s.y);
+    ctx.rotate(s.angle);
+    ctx.scale(s.scale, s.scale);
+    ctx.translate(-starCenterX, -starCenterY);
+    ctx.fillStyle = starClr;
+    ctx.fill(starPath);
+    ctx.restore();
   }
 }
 
 /**
- * @description 更新画布尺寸并重绘
+ * @description 绘制火箭光标
+ * @param {CanvasRenderingContext2D} ctx Canvas上下文
  */
+function drawRocketCursor(ctx: CanvasRenderingContext2D) {
+  if (!showCustomCursor.value) return;
+
+  const { x, y } = cursorPos.value;
+  if (x < 0 || x > cw || y < 0 || y > ch) return;
+
+  const rocketScale = 0.03;
+  const rocketColor = getCssVar("--rocket-clr") || "#DD75A1";
+
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(currentCursorAngle.value); // 使用平滑后的角度
+  ctx.scale(rocketScale, rocketScale);
+  ctx.translate(-rocketCenterX, -rocketCenterY);
+  ctx.fillStyle = rocketColor;
+  ctx.fill(rocketPath);
+  ctx.restore();
+}
+
+/**
+ * @description 更新星星位置
+ * @param {number} deltaSec 时间间隔
+ */
+function updateStars(deltaSec: number) {
+  for (const s of stars) {
+    s.x += s.vx * deltaSec;
+    s.y += s.vy * deltaSec;
+    if (s.x < 0) {
+      s.x = -s.x;
+      s.vx = -s.vx;
+    } else if (s.x > cw) {
+      s.x = 2 * cw - s.x;
+      s.vx = -s.vx;
+    }
+    if (s.y < 0) {
+      s.y = -s.y;
+      s.vy = -s.vy;
+    } else if (s.y > ch) {
+      s.y = 2 * ch - s.y;
+      s.vy = -s.vy;
+    }
+    s.angle += s.rotateSpeed * deltaSec;
+    if (s.angle > Math.PI * 2) s.angle -= Math.PI * 2;
+  }
+}
+function updatePlanets(deltaSec: number) {
+  for (const p of planets) {
+    p.orbitAngle += p.orbitSpeed * deltaSec;
+    p.x = p.centerX + p.orbitRadius * Math.cos(p.orbitAngle);
+    p.y = p.centerY + p.orbitRadius * Math.sin(p.orbitAngle);
+    p.angle += p.selfRotateSpeed * deltaSec;
+    if (p.angle > Math.PI * 2) p.angle -= Math.PI * 2;
+  }
+}
+function updateCursorAngle(deltaSec: number) {
+  if (!showCustomCursor.value) return;
+  // 使用指数移动平均平滑角度
+  let delta = targetCursorAngle - currentCursorAngle.value;
+  // 处理角度循环（确保差值在 -PI 到 PI 之间）
+  if (delta > Math.PI) delta -= Math.PI * 2;
+  if (delta < -Math.PI) delta += Math.PI * 2;
+  // 按平滑系数逐步逼近
+  const step = delta * ANGLE_SMOOTHING;
+  currentCursorAngle.value += step;
+  // 归一化到 [-PI, PI]
+  if (currentCursorAngle.value > Math.PI)
+    currentCursorAngle.value -= Math.PI * 2;
+  if (currentCursorAngle.value < -Math.PI)
+    currentCursorAngle.value += Math.PI * 2;
+}
+
+/**
+ * @description 动画循环
+ * @param {number} timestamp 时间戳
+ */
+function animate(timestamp: number) {
+  if (!canvasRef.value || cw === 0 || ch === 0) {
+    animationId = requestAnimationFrame(animate);
+    return;
+  }
+  if (lastTimestamp === 0) {
+    lastTimestamp = timestamp;
+    animationId = requestAnimationFrame(animate);
+    return;
+  }
+  let deltaSec = (timestamp - lastTimestamp) / 1000;
+  if (deltaSec > 0.1) deltaSec = 0.1;
+  if (deltaSec > 0) {
+    updateStars(deltaSec);
+    updatePlanets(deltaSec);
+    updateCursorAngle(deltaSec); // 平滑更新角度
+    draw();
+    const ctx = canvasRef.value?.getContext("2d");
+    if (ctx) drawRocketCursor(ctx);
+  }
+  lastTimestamp = timestamp;
+  animationId = requestAnimationFrame(animate);
+}
+
 function updateCanvasSize() {
   const container = containerRef.value;
   if (!container) return;
   const rect = container.getBoundingClientRect();
   if (rect.width === 0 || rect.height === 0) return;
-
   const canvas = canvasRef.value;
   if (!canvas) return;
   canvas.width = rect.width;
@@ -224,41 +394,72 @@ function updateCanvasSize() {
   ch = rect.height;
 
   const area = cw * ch;
-
-  // 生成星球
-  const planetCount = calcPlanetCount(area);
+  const planetCount = 8;
   planets = generatePlanets(planetCount, cw, ch, area);
-
-  // 生成星星
-  const starCount = calcStarCount(area); // 使用原来的星星数量函数
-  stars = generateStars(starCount, cw, ch); // 原来的星星生成函数不变
+  const starCount = calcStarCount(area);
+  stars = generateStars(starCount, cw, ch);
 
   draw();
 }
 
-// 监听容器尺寸变化
 function initObservers() {
   const container = containerRef.value;
   if (!container) return;
-
-  resizeObserver = new ResizeObserver(() => {
-    updateCanvasSize();
-  });
+  resizeObserver = new ResizeObserver(() => updateCanvasSize());
   resizeObserver.observe(container);
-
-  themeObserver = new MutationObserver(() => {
-    draw();
-  });
-
+  themeObserver = new MutationObserver(() => draw());
   themeObserver.observe(document.documentElement, {
     attributes: true,
     attributeFilter: ["class"],
   });
 }
 
+function initCursorEvents() {
+  const canvas = canvasRef.value;
+  if (!canvas) return;
+
+  cursorEnterHandler = () => {
+    showCustomCursor.value = true;
+    canvas.style.cursor = "none";
+  };
+
+  cursorMoveHandler = (e: MouseEvent) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    cursorPos.value = { x, y };
+    if (e.movementX !== 0 || e.movementY !== 0) {
+      targetCursorAngle = Math.atan2(e.movementY, e.movementX);
+    }
+  };
+
+  cursorLeaveHandler = () => {
+    showCustomCursor.value = false;
+    canvas.style.cursor = "";
+  };
+
+  canvas.addEventListener("mouseenter", cursorEnterHandler);
+  canvas.addEventListener("mousemove", cursorMoveHandler);
+  canvas.addEventListener("mouseleave", cursorLeaveHandler);
+}
+
+function cleanupCursorEvents() {
+  const canvas = canvasRef.value;
+  if (!canvas) return;
+  if (cursorEnterHandler)
+    canvas.removeEventListener("mouseenter", cursorEnterHandler);
+  if (cursorMoveHandler)
+    canvas.removeEventListener("mousemove", cursorMoveHandler);
+  if (cursorLeaveHandler)
+    canvas.removeEventListener("mouseleave", cursorLeaveHandler);
+}
+
 onMounted(() => {
   initObservers();
   updateCanvasSize();
+  lastTimestamp = 0;
+  animationId = requestAnimationFrame(animate);
+  initCursorEvents();
 });
 
 onBeforeUnmount(() => {
@@ -266,11 +467,15 @@ onBeforeUnmount(() => {
     resizeObserver.disconnect();
     resizeObserver = null;
   }
-
   if (themeObserver) {
     themeObserver.disconnect();
     themeObserver = null;
   }
+  if (animationId) {
+    cancelAnimationFrame(animationId);
+    animationId = null;
+  }
+  cleanupCursorEvents();
 });
 </script>
 
@@ -284,7 +489,7 @@ onBeforeUnmount(() => {
 .home-logo {
   position: relative;
   width: 100%;
-  height: 60%;
+  height: 100%;
   background-color: var(--bg-clr);
 }
 </style>

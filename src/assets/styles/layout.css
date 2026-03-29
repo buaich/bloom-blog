@@ -16,10 +16,12 @@
   --font-clr-one: #1c1c1c;
   --font-clr-two: rgba(60, 60, 60, 0.33);
   --border-clr: rgba(60, 60, 60, 0.12);
-  --bg-clr: #fff;
+  --bg-clr: #e3e5e7;
 
-  --planet-clr: #1c1c1c;
-  --star-clr: #1c1c1c;
+  --planet-clr: #9b9292;
+  --star-clr: #dab956;
+  --orbit-clr: rgba(100, 150, 200, 0.5);
+  --rocket-clr: #9b9292;
 }
 
 .dark{
@@ -27,8 +29,11 @@
   --font-clr-two: #ffffffb6;
   --border-clr: rgba(255, 255, 255, 0.12);
   --bg-clr: #1a1a1a;
-  --planet-clr: #fff;
+
+  --planet-clr: #e3e5e7;
   --star-clr: #ffd966;
+  --orbit-clr: rgba(255, 255, 255, 0.3);
+  --rocket-clr: #e3e5e7;
 
   transition: all 1s ease-out;
 }
