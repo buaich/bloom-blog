@@ -49,6 +49,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: bloom-blog # 替换为你的 Cloudflare Pages
-          directory: ./dist # 构建输出目录
+          projectName: bloom-blog
+          directory: ./dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
