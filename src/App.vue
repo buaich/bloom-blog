@@ -28,7 +28,7 @@ import BlogNavbar from "./components/BlogNavbar.vue";
   flex-direction: column;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 960px) {
   .main {
     padding: 0;
   }

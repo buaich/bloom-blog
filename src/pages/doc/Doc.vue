@@ -1,8 +1,9 @@
 <script setup lang="ts" name="Doc">
 import DocOutline from "./DocOutline.vue";
 import DocSidebar from "./DocSidebar.vue";
+import DocMenu from "./DocMenu.vue";
 import { useRoute } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, useTemplateRef, watch } from "vue";
 import { useDocStore } from "@/store/doc";
 import { storeToRefs } from "pinia";
 
@@ -11,6 +12,7 @@ const skill = ref<string>(route.params.skill as string); //路由参数
 const docStore = useDocStore();
 const { loadFirst } = docStore; //初次加载Markdown组件
 const { current } = storeToRefs(docStore); //当前展示的Markdown组件
+const sidebarRef = useTemplateRef<HTMLDivElement>("sidebarRef"); //侧边栏DOM元素
 
 watch(
   () => skill.value,
@@ -26,62 +28,86 @@ watch(
 </script>
 
 <template>
-  <div class="doc-container">
-    <div class="doc-sidebar">
-      <DocSidebar :skill="skill"></DocSidebar>
+  <div class="doc">
+    <div class="doc-menu">
+      <DocMenu :sidebar-ref="sidebarRef"></DocMenu>
     </div>
-    <div class="doc-content">
-      <component :is="current" />
-    </div>
-    <div class="doc-outline">
-      <DocOutline></DocOutline>
+    <div class="doc-main">
+      <div class="doc-main__sidebar" ref="sidebarRef">
+        <DocSidebar :skill="skill"></DocSidebar>
+      </div>
+      <div class="doc-main__content">
+        <component :is="current" />
+      </div>
+      <div class="doc-main__outline">
+        <DocOutline></DocOutline>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.doc-container {
+.doc {
   --doc-sidebar-width: 250px;
   --doc-outline-width: 250px;
 }
-.doc-container {
+.doc {
   display: flex;
+  flex-direction: column;
   height: 100%;
   width: 100%;
   background-color: var(--bg-clr);
   color: var(--font-clr-one);
 }
 
-.doc-sidebar {
+.doc-menu {
+  display: none;
+}
+
+.doc-main {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.doc-main__sidebar {
   box-sizing: border-box;
   width: var(--doc-sidebar-width);
   border-right: 1px solid var(--border-clr);
   overflow-y: auto;
 }
 
-.doc-content {
+.doc-main__content {
   box-sizing: border-box;
   flex: 1;
   overflow-y: auto;
 }
 
-.doc-outline {
+.doc-main__outline {
   box-sizing: border-box;
   width: var(--doc-outline-width);
   border-left: 1px solid var(--border-clr);
   overflow-y: auto;
 }
 
-@media (max-width: 1000px) {
-  .doc-sidebar {
+@media (max-width: 800px) {
+  .doc-main__sidebar,
+  .doc-main__outline {
     display: none;
   }
 }
 
-@media (max-width: 800px) {
-  .doc-sidebar,
-  .doc-outline {
+@media (max-width: 960px) {
+  .doc-main__sidebar {
     display: none;
+  }
+  .doc-menu {
+    position: sticky;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 55px;
   }
 }
 </style>
