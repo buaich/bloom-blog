@@ -50,4 +50,8 @@ watch(
   padding-top: var(--font-size);
   color: var(--font-clr-one);
 }
+
+.list {
+  cursor: pointer;
+}
 </style>
