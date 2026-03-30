@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, useTemplateRef } from "vue";
 import ThemeButton from "./ThemeButton.vue";
+import { useRouter } from "vue-router";
 
 const menuOptions = ref<Map<string, string[]>>(
   new Map([
@@ -12,6 +13,11 @@ const menuOptions = ref<Map<string, string[]>>(
 const computedMenuOptions = computed(() =>
   [...menuOptions.value.entries()].map(([key, value]) => ({ key, value })),
 );
+
+const router = useRouter();
+function go(path: string) {
+  router.push(path);
+}
 
 const keys = useTemplateRef<HTMLSpanElement>("keys"); //DOM元素
 /**
@@ -113,7 +119,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
               class="dropdown-list-item"
               v-for="item in menuOption.value"
               :key="item"
-              href="/"
+              @click="go(`/${menuOption.key}/${item}`)"
             >
               {{ item }}
             </a>

@@ -1,4 +1,4 @@
-import Doc from "@/pages/docs/Doc.vue";
+import Doc from "@/pages/doc/Doc.vue";
 
 export default [
   {
