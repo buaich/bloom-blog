@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BlogNavbar from "./components/BlogNavbar.vue";
-import HelloVue3 from "@/assets/docs/HelloVue3.md";
 </script>
 
 <template>
