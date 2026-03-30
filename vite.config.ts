@@ -2,28 +2,11 @@ import { defineConfig } from "vitest/config";
 import { fileURLToPath, URL } from "node:url";
 import vue from "@vitejs/plugin-vue";
 import vueDevTools from "vite-plugin-vue-devtools";
-import seoPrerender from "vite-plugin-seo-prerender";
-import Markdown from "unplugin-vue-markdown/vite";
+
+import { cloudflare } from "@cloudflare/vite-plugin";
 
 export default defineConfig({
-  plugins: [
-    Markdown({
-      include: [/\.md$/],
-      markdownItOptions: {
-        html: true,
-        linkify: true,
-        typographer: true,
-      },
-    }),
-
-    vue({ include: [/\.vue$/, /\.md$/] }),
-
-    vueDevTools(),
-
-    seoPrerender({
-      routes: ["/"],
-    }),
-  ],
+  plugins: [vue(), vueDevTools(), cloudflare()],
 
   test: {
     globals: true,
