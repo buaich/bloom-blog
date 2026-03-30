@@ -8,17 +8,13 @@
 - 运行时渲染器会遍历整个虚拟DOM树，来构建真实DOM树（**mount**）
 - 如果有两份虚拟DOM树，运行时渲染器将遍历它们、比较并运用(即改变真实DOM)变化（**diffing**）
 
-
-
 ### 2.渲染管线
 
-<img src="images\render-pipeline.png" alt="render-pipeline" style="zoom:50%;" />
+<img src="https://img.bloomm.dpdns.org/render-pipeline.png" alt="render-pipeline" style="zoom:50%;" />
 
 - 编译：Vue模版会被编译成渲染函数(返回虚拟DOM树的根结点)
 - 挂载：运行时渲染器调用渲染函数，得到并遍历虚拟DOM树，并创建真实DOM
 - 更新：依赖变化后，组件的渲染函数重新执行，生成新的虚拟DOM树；然后运行时渲染器将新旧虚拟DOM树进行比较，并将必要的更新应用到真实DOM上
-
-
 
 ### 3.Diff
 
@@ -29,8 +25,6 @@
   - **若不相同**：直接销毁旧节点及其子树，然后根据新根节点递归创建真实DOM，并替换掉旧的DOM 元素
   - **若相同**：进入更新流程，复用旧节点对应的真实 DOM 元素
 
-
-
 #### 3.2 更新相同根节点
 
 - 属性更新：如果新节点有属性，调用对应方法，比较新旧属性并更新到真实 DOM 上
@@ -39,8 +33,6 @@
   - 有子节点（即 children数组）而旧节点没有，则清空旧 DOM 的内容，然后遍历新子节点依次创建并插入
   - 如果新节点没有子节点而旧节点有，则直接移除旧 DOM 的所有子节点
   - **如果都有子节点**，进行核心的子节点 Diff 比较
-
-
 
 #### 3.3 子节点双端比较
 
@@ -65,27 +57,22 @@
     - **如果没有找到或 key 不匹配**：则根据 `newStartVnode` 创建一个新的 DOM 节点，插入到旧头节点之前，然后 `newStartIdx++`
 
 - **循环结束后**，还需要处理剩余节点：
-
   - 如果 `oldStartIdx > oldEndIdx`，说明旧子节点已经全部处理完，但新子节点还有剩余（`newStartIdx <= newEndIdx`）。此时需要遍历新子节点剩余部分，依次创建新 DOM 并插入到合适位置（通常是插入到 `oldEndVnode.el` 之后或父容器的末尾）
 
   - 如果 `newStartIdx > newEndIdx`，说明新子节点已经全部处理完，但旧子节点还有剩余（`oldStartIdx <= oldEndIdx`）。此时需要遍历旧子节点剩余部分，依次从 DOM 中移除
 
+<img src="https://img.bloomm.dpdns.org/diff-1.png" alt="diff-1" style="zoom: 33%;" />
 
+<img src="https://img.bloomm.dpdns.org/diff-2.png" alt="diff-2" style="zoom:33%;" />
 
-<img src="images\diff-1.png" alt="diff-1" style="zoom: 33%;" />
+<img src="https://img.bloomm.dpdns.org/diff-3.png" alt="diff-3" style="zoom:33%;" />
 
-<img src="images\diff-2.png" alt="diff-2" style="zoom:33%;" />
+<img src="https://img.bloomm.dpdns.org/diff-4.png" alt="diff-4" style="zoom:33%;" />
 
-<img src="images\diff-3.png" alt="diff-3" style="zoom:33%;" />
+<img src="https://img.bloomm.dpdns.org/diff-5.png" alt="diff-5" style="zoom:33%;" />
 
-<img src="images\diff-4.png" alt="diff-4" style="zoom:33%;" />
+<img src="https://img.bloomm.dpdns.org/diff-6.png" alt="diff-6" style="zoom:33%;" />
 
-<img src="images\diff-5.png" alt="diff-5" style="zoom:33%;" />
+<img src="https://img.bloomm.dpdns.org/diff-7.png" alt="diff-7" style="zoom:33%;" />
 
-<img src="images\diff-6.png" alt="diff-6" style="zoom:33%;" />
-
-<img src="images\diff-7.png" alt="diff-7" style="zoom:33%;" />
-
-<img src="images\diff-8.png" alt="diff-8" style="zoom:33%;" />
-
- 
+<img src="https://img.bloomm.dpdns.org/diff-8.png" alt="diff-8" style="zoom:33%;" />

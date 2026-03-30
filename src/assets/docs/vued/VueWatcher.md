@@ -1,10 +1,8 @@
 在响应式状态改变的时候, 我们希望一些"副作用"
 
-``` ts
+```ts
 watch(source, callback[, options])
 ```
-
-
 
 ### 1.监视范围
 
@@ -16,20 +14,13 @@ A -.- D([特殊的getter])
 A -.- E([上面三个的数组])
 ```
 
-
-
-
-
 ### 2.监视ref
 
 约定，ref是RefImpl对象
 
-
-
 - 非对象类型的值得到的ref，可以直接监视
 
 - 对象类型的值得到的ref：
-
   - 监视ref或()=>ref.value，仅当ref的引用变化是触发
 
   - 传递第三个参数{deep: true}，ref的引用变化或propertyName属性变化都会触发
@@ -43,17 +34,11 @@ A -.- E([上面三个的数组])
 > ③ 监视由嵌套对象（inner）的对象（outer）得到的ref很复杂；通常`ref(outer)`的值`outerRef`中有`innerProxy`（一个Proxy响应式对象）：
 >
 > - `outerRef.value`作为`source`，**仅**当`outerRef.value`引用变化时有效；开启深度监视，可以跟踪所有属性！
->
 > - `outerRef.value.innerProxy`作为`source`，**仅**当`outerRef.value`的引用没有改变且`outerRef.value.innerProxy`变化时有效；当`outerRef.value`的引用改变时，该监视会失效！开启深度监视，效果一样。
->
 > - `()=>outerRef.value.innerProxy`作为`source`，**仅**当`outerRef.value`的引用改变时有效；开启深度监视，当`outerRef.value`改变或者`outerRef.value.innerProxy`变化都有效！
->
 > - 非对象响应式属性写成`()=>notOject`作为`source`；当`outerRef.value.notObject`变化或者`outerRef.value`引用改变时都有效；开启深度监视，效果一样。
 >
 >   注意，**深度监视**，`watch(source,callback,{deep:true})`，递归跟踪源的所有属性；有效指的是调用`callback`。
->
-
-
 
 | source                      | 是否开启深度模式 | 监视有效的前提                               |
 | --------------------------- | ---------------- | -------------------------------------------- |
@@ -67,31 +52,19 @@ A -.- E([上面三个的数组])
 - basic是原始类型值对应的`RefImpl`对象。
 - outer和inner都是`Proxy`对象，虽然是由`ref()`得到的。
 
-
-
 ### 3.监视reactive
 
 规定，reactive就是reactive()返回的Proxy对象
 
-
-
 - 监视reactive时，强制开启深度监视
 
-
 - 修改整个reactive，响应性直接丢失，因此也是不能监视的！
-
-
-
-
 
 ### 4.监视多源
 
 - `watch()`第一个参数使用数组,` callback`的两个参数 `newValue`和`oldValue`也会是数组
 
 - 也可以使用{deep:true}
-
-
-
 
 ### 5.其他配置
 
@@ -102,10 +75,6 @@ A -.- E([上面三个的数组])
 ##### （2） 源变化后仅触发一次
 
 `callback`的第三个参数为“`{once:true}`”
-
-
-
-
 
 ### 6.WatchEffect
 
@@ -118,25 +87,21 @@ A -.- E([上面三个的数组])
 ```ts
 let data1 = ref("data1");
 let data2 = reactive({
-    data2: "data2",
+  data2: "data2",
 });
 
 watchEffect(() => {
-    if (data1.value !== data2.data2) {
-        console.log("no same");
-    } else {
-        console.log("same");
-    }
+  if (data1.value !== data2.data2) {
+    console.log("no same");
+  } else {
+    console.log("same");
+  }
 });
 ```
-
-
 
 #### 3.2 与watch()的比较
 
 ##### **“`watch()`较精确，`watchEffect()`较自动。”**
-
-
 
 `watch` 和 `watchEffect` 都能响应式地执行有副作用的回调。
 
