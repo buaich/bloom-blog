@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 
 const menuOptions = ref<Map<string, string[]>>(
   new Map([
-    ["Docs", ["JavaScript", "Axios", "TypeScript"]],
+    ["Docs", ["Vue"]],
     ["UI", ["Form", "Button", "Block"]],
     ["About", ["Me", "Github"]],
   ]),
@@ -15,6 +15,11 @@ const computedMenuOptions = computed(() =>
 );
 
 const router = useRouter();
+/**
+ * @description 函数描述
+ * @param {类型} 参数名 参数描述
+ * @return {返回类型}
+ */
 function go(path: string) {
   router.push(path);
 }
@@ -310,6 +315,7 @@ onUnmounted(() => window.removeEventListener("keydown", focusSearchKeys));
 .dropdown-list-item {
   color: var(--font-clr-one);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .dropdown-option:hover .dropdown-list {
