@@ -4,7 +4,6 @@ import vue from "@vitejs/plugin-vue";
 import vueDevTools from "vite-plugin-vue-devtools";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import Markdown from "unplugin-vue-markdown/vite";
-import seoPrerender from "vite-plugin-seo-prerender";
 
 export default defineConfig({
   plugins: [
@@ -21,10 +20,6 @@ export default defineConfig({
         linkify: true,
         typographer: true,
       },
-    }),
-
-    seoPrerender({
-      routes: ["/"],
     }),
   ],
 
