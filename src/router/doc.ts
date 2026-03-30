@@ -2,7 +2,7 @@ import Doc from "@/pages/doc/Doc.vue";
 
 export default [
   {
-    path: "/docs/:docAffiliate",
+    path: "/Docs/:skill",
     component: Doc,
   },
 ];

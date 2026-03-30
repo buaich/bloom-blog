@@ -7,16 +7,14 @@
 }
 
 :root{
+  --bg-clr: #e3e5e7;
   --font-size: 16px;
   --font-weight: 500;
   --transtion-standard: 0.25s ease;
-
   --border-rs: 4px;
-
+  --border-clr: rgba(60, 60, 60, 0.12);
   --font-clr-one: #1c1c1c;
   --font-clr-two: rgba(60, 60, 60, 0.33);
-  --border-clr: rgba(60, 60, 60, 0.12);
-  --bg-clr: #e3e5e7;
 
   --planet-clr: #9b9292;
   --star-clr: #dab956;
