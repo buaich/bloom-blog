@@ -5,10 +5,17 @@ import { useDocStore } from "@/store/doc";
 const props = defineProps<{
   skill: string;
 }>();
-
+const emit = defineEmits<{
+  (e: "select", item: string): void;
+}>();
 const docStore = useDocStore();
-const { skillMap, loadMarkdownComponent } = docStore; //技术→文档列表
+const { skillMap, loadMarkdownComponent } = docStore;
 const list = ref<string[]>([]);
+const handleClick = (item: string) => {
+  loadMarkdownComponent(props.skill, item); // 加载文档内容
+  emit("select", item); // 通知父组件关闭侧边栏，同时传递选中的项
+};
+
 watch(
   () => props.skill,
   (newSkillName) => {
@@ -25,7 +32,7 @@ watch(
         class="list__item"
         v-for="(item, index) in list"
         :key="index"
-        @click="loadMarkdownComponent(props.skill, item)"
+        @click="handleClick(item)"
       >
         {{ item }}
       </div>
