@@ -1,8 +1,29 @@
-<script setup lang="ts" name="DocMenu"></script>
+<script setup lang="ts" name="DocMenu">
+import { ref, watch, onMounted, onUnmounted } from "vue";
+import { useRoute } from "vue-router";
+import DocSidebar from "./DocSidebar.vue";
+
+const route = useRoute();
+const skill = ref<string>(route.params.skill as string); // 获取当前技术参数
+const isOpen = ref(false); // 侧边栏显示状态
+const toggleSidebarStatus = () => {
+  isOpen.value = !isOpen.value;
+}; // 切换侧边栏显示状态
+const closeSidebar = () => {
+  isOpen.value = false;
+}; // 关闭侧边栏
+
+watch(
+  () => route.path,
+  () => {
+    closeSidebar(); //路由变化时关闭侧边栏
+  },
+);
+</script>
 
 <template>
   <div class="menu">
-    <button class="menu-btn" type="button">
+    <button class="menu-btn" type="button" @click="toggleSidebarStatus">
       <svg
         t="1774868009023"
         class="menu-btn-logo"
@@ -21,6 +42,17 @@
       <span class="menu-btn-text">content</span>
     </button>
   </div>
+
+  <Teleport to="body">
+    <Transition name="fade">
+      <div v-if="isOpen" class="overlay" @click="closeSidebar"></div>
+    </Transition>
+    <Transition name="slide">
+      <div v-if="isOpen" class="sidebar">
+        <DocSidebar :skill="skill" @select="closeSidebar" />
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -50,5 +82,46 @@
   width: var(--font-size);
   height: var(--font-size);
   margin-right: calc(var(--font-size) / 2);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background-color: var(--bg-clr);
+  z-index: 1001;
+  overflow-y: auto;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease;
+}
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-100%);
 }
 </style>
