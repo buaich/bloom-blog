@@ -1,5 +1,5 @@
 <script setup lang="ts" name="HamburgerMenu">
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import NavContent from "@/components/nav/NavContent.vue";
 
 let isOpen = ref<boolean>(false);
@@ -9,6 +9,18 @@ const closeMenu = () => {
 const toggleMenuStatus = () => {
   isOpen.value = !isOpen.value;
 };
+const handleResize = () => {
+  if (window.innerWidth > 800 && isOpen.value) {
+    closeMenu();
+  }
+}; //处理窗口大小变化的函数，当窗口宽度大于800px且菜单处于打开状态时，关闭菜单
+
+onMounted(() => {
+  window.addEventListener("resize", handleResize);
+});
+onUnmounted(() => {
+  window.removeEventListener("resize", handleResize);
+});
 </script>
 
 <template>
