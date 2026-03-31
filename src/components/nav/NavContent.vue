@@ -2,6 +2,9 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
+const props = defineProps<{
+  isShow?: boolean;
+}>();
 const menuOptions = ref<Map<string, string[]>>(
   new Map([
     ["Docs", ["Vue"]],
@@ -28,6 +31,7 @@ function go(path: string) {
   <div class="content">
     <div
       class="option"
+      :class="{ show: isShow }"
       v-for="menuOption in computedMenuOptions"
       :key="menuOption.key"
     >
@@ -131,7 +135,7 @@ function go(path: string) {
 }
 
 @media (max-width: 800px) {
-  .option {
+  .show {
     display: none;
   }
 }

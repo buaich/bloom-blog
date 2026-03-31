@@ -35,7 +35,7 @@ import NavMore from "@/components/nav/NavMore.vue";
       </div>
       <!-- 导航栏菜单 -->
       <div class="content-wrapper navbar-main-item">
-        <NavContent></NavContent>
+        <NavContent :isShow="true"></NavContent>
       </div>
 
       <div class="more-wrapper navbar-main-item">

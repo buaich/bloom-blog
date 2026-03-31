@@ -1,5 +1,6 @@
 <script setup lang="ts" name="HamburgerMenu">
 import { ref } from "vue";
+import NavContent from "@/components/nav/NavContent.vue";
 
 let isOpen = ref<boolean>(false);
 const closeMenu = () => {
@@ -42,11 +43,10 @@ const toggleMenuStatus = () => {
   </div>
 
   <Teleport to="body">
-    <Transition name="fade">
-      <div v-if="isOpen" class="overlay" @click="closeMenu"></div>
-    </Transition>
     <Transition name="slide">
-      <div v-if="isOpen" class="hamburger-content" @select="closeMenu"></div>
+      <div v-if="isOpen" class="main" @select="closeMenu">
+        <NavContent :isShow="true"></NavContent>
+      </div>
     </Transition>
   </Teleport>
 </template>
@@ -65,13 +65,25 @@ const toggleMenuStatus = () => {
   width: calc(var(--font-size) * 1.5);
   height: calc(var(--font-size) * 1.5);
 }
-.overlay {
+
+.main {
   position: fixed;
   top: 55px;
   left: 0;
+  bottom: 0;
   width: 100%;
-  height: 100%;
   background-color: var(--bg-clr);
-  z-index: 1000;
+  z-index: 1001;
+  overflow-y: auto;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease;
+}
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(100%);
 }
 </style>
