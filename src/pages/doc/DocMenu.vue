@@ -1,5 +1,5 @@
 <script setup lang="ts" name="DocMenu">
-import { ref, watch, onMounted, onUnmounted } from "vue";
+import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import DocSidebar from "./DocSidebar.vue";
 

@@ -3,7 +3,7 @@ import DocOutline from "./DocOutline.vue";
 import DocSidebar from "./DocSidebar.vue";
 import DocMenu from "./DocMenu.vue";
 import { useRoute } from "vue-router";
-import { ref, useTemplateRef, watch } from "vue";
+import { ref, watch } from "vue";
 import { useDocStore } from "@/store/doc";
 import { storeToRefs } from "pinia";
 
@@ -12,7 +12,6 @@ const skill = ref<string>(route.params.skill as string); //路由参数
 const docStore = useDocStore();
 const { loadFirst } = docStore; //初次加载Markdown组件
 const { current } = storeToRefs(docStore); //当前展示的Markdown组件
-const sidebarRef = useTemplateRef<HTMLDivElement>("sidebarRef"); //侧边栏DOM元素
 
 watch(
   () => skill.value,
@@ -30,10 +29,10 @@ watch(
 <template>
   <div class="doc">
     <div class="doc-menu">
-      <DocMenu :sidebar-ref="sidebarRef"></DocMenu>
+      <DocMenu></DocMenu>
     </div>
     <div class="doc-main">
-      <div class="doc-main__sidebar" ref="sidebarRef">
+      <div class="doc-main__sidebar">
         <DocSidebar :skill="skill"></DocSidebar>
       </div>
       <div class="doc-main__content">
