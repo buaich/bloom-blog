@@ -28,14 +28,14 @@ watch(
 <template>
   <div class="container">
     <div class="list">
-      <div
-        class="list__item"
+      <a
+        class="list-item"
         v-for="(item, index) in list"
         :key="index"
         @click="handleClick(item)"
       >
-        {{ item }}
-      </div>
+        <span class="list-item-text">{{ item }}</span>
+      </a>
     </div>
   </div>
 </template>
@@ -48,10 +48,22 @@ watch(
   flex-direction: column;
   padding-left: var(--font-size);
   padding-top: var(--font-size);
-  color: var(--font-clr-one);
+  color: gray;
+  font-size: calc(var(--font-size));
 }
 
 .list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-item {
+  padding: calc(var(--font-size) / 2) 0;
   cursor: pointer;
+  transition: all var(--transition-standard);
+}
+
+.list-item:hover .list-item-text {
+  color: var(--font-clr-one);
 }
 </style>

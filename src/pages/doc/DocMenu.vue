@@ -65,6 +65,7 @@ watch(
   background-color: var(--bg-clr);
   box-sizing: border-box;
   border-bottom: 1px solid var(--border-clr);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .menu-btn {
