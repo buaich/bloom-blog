@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const navStore = defineStore("nav", () => {
+export const useNavStore = defineStore("nav", () => {
   // 菜单选项→技术列表
   const menuMap: Map<string, string[]> = new Map([
     ["Docs", ["Vue"]],
@@ -8,5 +8,12 @@ export const navStore = defineStore("nav", () => {
     ["About", ["Me", "Github"]],
   ]);
 
-  const menuObj: Record<string, string[]> = {};
+  const menuOptions: { key: string; value: string[] }[] = [
+    ...menuMap.entries(),
+  ].map(([key, value]) => ({
+    key,
+    value,
+  }));
+
+  return { menuMap, menuOptions };
 });

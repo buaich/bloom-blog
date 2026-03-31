@@ -44,8 +44,8 @@ const toggleMenuStatus = () => {
 
   <Teleport to="body">
     <Transition name="slide">
-      <div v-if="isOpen" class="main" @select="closeMenu">
-        <NavContent :isShow="true"></NavContent>
+      <div v-if="isOpen" class="main">
+        <NavContent :state="'small'" @c="closeMenu" />
       </div>
     </Transition>
   </Teleport>

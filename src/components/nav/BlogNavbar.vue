@@ -35,7 +35,7 @@ import NavMore from "@/components/nav/NavMore.vue";
       </div>
       <!-- 导航栏菜单 -->
       <div class="content-wrapper navbar-main-item">
-        <NavContent :isShow="true"></NavContent>
+        <NavContent :state="'big'"></NavContent>
       </div>
 
       <div class="more-wrapper navbar-main-item">
@@ -107,24 +107,83 @@ import NavMore from "@/components/nav/NavMore.vue";
   justify-content: flex-end;
   padding-left: var(--font-size);
 }
-
 .navbar-main-item {
   height: var(--menu-h);
   display: flex;
   align-items: center;
 }
-
 .search-wrapper {
   flex-grow: 1;
   flex-shrink: 2;
 }
-
 .content-wrapper {
   justify-content: flex-end;
 }
-
 .hamburger-wrapper {
   display: none;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--font-size);
+}
+.btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--font-clr-one);
+  transition: all var(--transtion-standard);
+}
+.btn-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--menu-h);
+  line-height: var(--menu-h);
+}
+.dropdown-btn-logo {
+  fill: var(--font-clr-one);
+  margin-left: calc(var(--font-size) / 4);
+  transition: var(--transtion-standard);
+}
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  z-index: 999;
+
+  display: none;
+  flex-direction: column;
+
+  background-color: var(--bg-clr);
+  padding: var(--font-size) var(--font-size);
+  border: 1px solid var(--border-clr);
+  border-radius: var(--border-rs);
+  transition: all var(--transtion-standard);
+}
+.dropdown-item {
+  color: var(--font-clr-one);
+  text-decoration: none;
+  cursor: pointer;
+}
+.option:hover .dropdown {
+  display: flex;
+}
+.btn:hover {
+  color: var(--font-clr-two);
+}
+.btn:hover .dropdown-btn-logo {
+  fill: var(--font-clr-two);
 }
 
 @media (max-width: 800px) {
@@ -136,6 +195,11 @@ import NavMore from "@/components/nav/NavMore.vue";
   .hamburger-wrapper {
     display: flex;
     align-items: center;
+  }
+}
+@media (max-width: 800px) {
+  :deep(.option) {
+    display: none;
   }
 }
 </style>

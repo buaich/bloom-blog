@@ -19,7 +19,10 @@
     </button>
 
     <div class="more-list">
-      <a class="more-list-item" href="/" target="_blank"
+      <a
+        class="more-list-item"
+        href="https://github.com/buaich/bloom-blog"
+        target="_blank"
         ><svg
           t="1774933741699"
           class="more-list-item-logo"
