@@ -1,8 +1,18 @@
-<script setup lang="ts" name="HamburgerMenu"></script>
+<script setup lang="ts" name="HamburgerMenu">
+import { ref } from "vue";
+
+let isOpen = ref<boolean>(false);
+const closeMenu = () => {
+  isOpen.value = false;
+};
+const toggleMenuStatus = () => {
+  isOpen.value = !isOpen.value;
+};
+</script>
 
 <template>
   <div class="hamburger-wrapper">
-    <button class="hamburger-btn">
+    <button class="hamburger-btn" type="button" @click="toggleMenuStatus">
       <svg
         t="1774934437589"
         class="hamburger-btn-logo"
@@ -30,6 +40,15 @@
       </svg>
     </button>
   </div>
+
+  <Teleport to="body">
+    <Transition name="fade">
+      <div v-if="isOpen" class="overlay" @click="closeMenu"></div>
+    </Transition>
+    <Transition name="slide">
+      <div v-if="isOpen" class="hamburger-content" @select="closeMenu"></div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -41,10 +60,18 @@
   cursor: pointer;
   padding-right: calc(var(--font-size) * 1.5);
 }
-
 .hamburger-btn-logo {
   fill: var(--font-clr-one);
   width: calc(var(--font-size) * 1.5);
   height: calc(var(--font-size) * 1.5);
+}
+.overlay {
+  position: fixed;
+  top: 55px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-clr);
+  z-index: 1000;
 }
 </style>
