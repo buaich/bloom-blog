@@ -12,13 +12,25 @@ const toggleSidebarStatus = () => {
 const closeSidebar = () => {
   isOpen.value = false;
 }; // 关闭侧边栏
-
 watch(
   () => route.path,
   () => {
     closeSidebar(); //路由变化时关闭侧边栏
   },
 );
+const handleResize = () => {
+  if (window.innerWidth > 800 && isOpen.value) {
+    closeSidebar();
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("resize", handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", handleResize);
+});
 </script>
 
 <template>
