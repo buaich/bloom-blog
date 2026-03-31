@@ -17,8 +17,8 @@
     "deploy": "npm run build-only && wrangler deploy"
   },
   "dependencies": {
+    "@vueuse/core": "^14.2.1",
     "axios": "^1.13.2",
-    "github-markdown-css": "^5.9.0",
     "highlight.js": "^11.11.1",
     "jsencrypt": "^3.5.4",
     "mitt": "^3.0.1",

@@ -5,15 +5,7 @@ import { useThemeStore } from "@/store/theme";
 const props = defineProps<{ size: number | string }>();
 const computedSize = computed(() => props.size + "px");
 const themeStore = useThemeStore();
-const { currentTheme, toggleTheme } = themeStore;
-
-/**
- * @description 切换主题
- * @return {undefined}
- */
-function toggle() {
-  toggleTheme();
-}
+const { toggleTheme } = themeStore;
 </script>
 
 <template>

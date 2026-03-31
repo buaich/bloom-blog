@@ -9,7 +9,7 @@ import NavMore from "@/components/nav/NavMore.vue";
 <template>
   <header class="navbar">
     <!-- 网站标识 -->
-    <a class="navbar-title" href="/">
+    <a class="navbar-title" href="#">
       <svg
         t="1772689824065"
         class="site-title-logo"
