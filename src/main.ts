@@ -8,7 +8,13 @@ import router from "./router";
 import { createPinia } from "pinia";
 // 引入mitt
 import emitter from "./utils/emitter";
+// 引入MarkdownWrapper全局组件
+import MarkdownWrapper from "./components/tools/MarkdownWrapper.vue";
 
 const pinia = createPinia();
 
-createApp(App).use(pinia).use(router).mount("#app");
+createApp(App)
+  .component("MarkdownWrapper", MarkdownWrapper)
+  .use(pinia)
+  .use(router)
+  .mount("#app");

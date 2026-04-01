@@ -2,23 +2,22 @@
 import DocOutline from "./DocOutline.vue";
 import DocSidebar from "./DocSidebar.vue";
 import DocMenu from "./DocMenu.vue";
-import MarkdownWrapper from "@/pages/doc/MarkdownWrapper.vue";
+import MarkdownWrapper from "../../components/tools/MarkdownWrapper.vue";
 import { useRoute } from "vue-router";
 import { ref, watch } from "vue";
 import { useDocStore } from "@/store/doc";
 import { storeToRefs } from "pinia";
 
 const route = useRoute();
-const skill = ref<string>(route.params.skill as string); //路由参数
 const docStore = useDocStore();
 const { loadFirst } = docStore; //初次加载Markdown组件
 const { current } = storeToRefs(docStore); //当前展示的Markdown组件
 
 watch(
-  () => skill.value,
-  (skill) => {
+  () => route.params.skill,
+  async (skill) => {
     if (skill) {
-      loadFirst(skill as string);
+      await loadFirst(skill as string);
     } else {
       current.value = null;
     }
@@ -34,7 +33,7 @@ watch(
     </div>
     <div class="doc-main">
       <div class="doc-main__sidebar">
-        <DocSidebar :skill="skill"></DocSidebar>
+        <DocSidebar :skill="route.params.skill as string"></DocSidebar>
       </div>
       <div class="doc-main__content">
         <MarkdownWrapper>

@@ -5,11 +5,13 @@ export const useDocStore = defineStore("doc", () => {
   // 技术→首先展示的文档名
   const firstMap: Map<string, string[]> = new Map([
     ["Vue", ["vued", "HelloVue3"]],
+    ["Css", ["cssd", "Flexbox"]],
   ]);
   // 技术→目录名
   const dirMap: Map<string, string> = new Map([
     ["Vue", "vued"],
     ["JavaScript", "jsd"],
+    ["Css", "cssd"],
   ]);
   // 技术→所有文档名
   const skillMap: Map<string, string[]> = new Map([
@@ -27,6 +29,7 @@ export const useDocStore = defineStore("doc", () => {
         "LifeCycle",
       ],
     ],
+    ["Css", ["Flexbox"]],
   ]);
 
   // 当前展示的Markdown组件
