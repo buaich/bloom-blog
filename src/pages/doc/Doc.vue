@@ -2,6 +2,7 @@
 import DocOutline from "./DocOutline.vue";
 import DocSidebar from "./DocSidebar.vue";
 import DocMenu from "./DocMenu.vue";
+import MarkdownWrapper from "@/pages/doc/MarkdownWrapper.vue";
 import { useRoute } from "vue-router";
 import { ref, watch } from "vue";
 import { useDocStore } from "@/store/doc";
@@ -36,7 +37,9 @@ watch(
         <DocSidebar :skill="skill"></DocSidebar>
       </div>
       <div class="doc-main__content">
-        <component :is="current" />
+        <MarkdownWrapper>
+          <component :is="current" />
+        </MarkdownWrapper>
       </div>
       <div class="doc-main__outline">
         <DocOutline></DocOutline>
@@ -47,7 +50,7 @@ watch(
 
 <style scoped>
 .doc {
-  --doc-sidebar-width: 250px;
+  --doc-sidebar-width: 200px;
   --doc-outline-width: 250px;
 }
 .doc {
