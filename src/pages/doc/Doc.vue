@@ -2,9 +2,8 @@
 import DocOutline from "./DocOutline.vue";
 import DocSidebar from "./DocSidebar.vue";
 import DocMenu from "./DocMenu.vue";
-import MarkdownWrapper from "../../components/tools/MarkdownWrapper.vue";
 import { useRoute } from "vue-router";
-import { ref, watch } from "vue";
+import { watch } from "vue";
 import { useDocStore } from "@/store/doc";
 import { storeToRefs } from "pinia";
 
@@ -36,9 +35,7 @@ watch(
         <DocSidebar :skill="route.params.skill as string"></DocSidebar>
       </div>
       <div class="doc-main__content">
-        <MarkdownWrapper>
-          <component :is="current" />
-        </MarkdownWrapper>
+        <component :is="current" />
       </div>
       <div class="doc-main__outline">
         <DocOutline></DocOutline>

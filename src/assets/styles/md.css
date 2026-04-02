@@ -1,6 +1,6 @@
 .markdown-body {
-  padding: 2rem 1.5rem;
-  font-size: 16px;
+  padding: var(--font-size);
+  font-size: var(--font-size);
   line-height: 1.6;
   word-wrap: break-word;
   color: var(--font-clr-one);
@@ -134,11 +134,13 @@
   border-radius: var(--border-rs);
   padding: 1rem;
   overflow-x: auto;
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
   font-size: 0.875rem;
   line-height: 1.45;
   margin-bottom: 1rem;
-  background-color: var(--markdown-code-bg); /* 如果高亮主题没有覆盖背景，这里可做后备 */
+  background-color: var(
+    --markdown-code-bg
+  ); /* 如果高亮主题没有覆盖背景，这里可做后备 */
 }
 
 /* 高亮后的代码内部样式（不干扰 hljs 的配色） */
@@ -157,7 +159,7 @@
   font-size: 85%;
   background-color: var(--markdown-code-bg);
   border-radius: var(--border-rs);
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
   color: var(--markdown-code-color);
 }
 

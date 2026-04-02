@@ -1,4 +1,4 @@
-* ,
+*,
 *::before,
 *::after {
   margin: 0;
@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-:root{
+:root {
   --bg-clr: #e3e5e7;
   --font-size: 16px;
   --font-weight: 500;
@@ -29,10 +29,10 @@
   --markdown-table-header-bg: #f6f8fa;
   --markdown-table-row-hover-bg: #f6f8fa;
   --markdown-hr-color: #d0d7de;
-  --markdown-bg: #ffffff;
+  --markdown-bg: #e3e5e7;
 }
 
-.dark{
+.dark {
   --font-clr-one: #fff;
   --font-clr-two: #ffffffb6;
   --border-clr: rgba(255, 255, 255, 0.12);

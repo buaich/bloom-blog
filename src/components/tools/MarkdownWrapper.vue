@@ -29,17 +29,13 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="markdown-body">
+  <div class="markdown-wrapper">
     <slot></slot>
   </div>
 </template>
 
 <style scoped>
-.markdown-body {
-  padding: 2rem 1.5rem;
+.markdown-wrapper {
   background-color: var(--bg-clr);
-  color: var(--font-clr-one);
-  font-size: 16px;
-  line-height: 1.6;
 }
 </style>
