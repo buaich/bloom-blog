@@ -1,10 +1,10 @@
 <script setup lang="ts" name="DocMenu">
-import { ref, watch, onMounted, onUnmounted } from "vue";
+import { computed, ref, watch, onMounted, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 import DocSidebar from "./DocSidebar.vue";
 
 const route = useRoute();
-const skill = ref<string>(route.params.skill as string); // 获取当前技术参数
+const skill = computed(() => route.params.skill as string); // 跟随路由参数变化
 const isOpen = ref(false); // 侧边栏显示状态
 const toggleSidebarStatus = () => {
   isOpen.value = !isOpen.value;
